@@ -13,6 +13,9 @@
 		02DD10762A20F3E500DCFC0D /* ios_study_assignmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10752A20F3E500DCFC0D /* ios_study_assignmentTests.swift */; };
 		02DD10802A20F3E500DCFC0D /* ios_study_assignmentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD107F2A20F3E500DCFC0D /* ios_study_assignmentUITests.swift */; };
 		02DD10822A20F3E500DCFC0D /* ios_study_assignmentUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10812A20F3E500DCFC0D /* ios_study_assignmentUITestsLaunchTests.swift */; };
+		02DD10972A20F76100DCFC0D /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD10962A20F76100DCFC0D /* Common */; };
+		02DD10992A20F76100DCFC0D /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD10982A20F76100DCFC0D /* Domain */; };
+		02DD109B2A20F76100DCFC0D /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD109A2A20F76100DCFC0D /* Network */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,9 @@
 		02DD107B2A20F3E500DCFC0D /* ios-study-assignmentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-study-assignmentUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02DD107F2A20F3E500DCFC0D /* ios_study_assignmentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_study_assignmentUITests.swift; sourceTree = "<group>"; };
 		02DD10812A20F3E500DCFC0D /* ios_study_assignmentUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_study_assignmentUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		02DD10922A20F61A00DCFC0D /* Network */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Network; sourceTree = "<group>"; };
+		02DD10932A20F63A00DCFC0D /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
+		02DD10942A20F65300DCFC0D /* Common */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Common; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +56,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02DD109B2A20F76100DCFC0D /* Network in Frameworks */,
+				02DD10992A20F76100DCFC0D /* Domain in Frameworks */,
+				02DD10972A20F76100DCFC0D /* Common in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,10 +82,12 @@
 		02DD10522A20F3E100DCFC0D = {
 			isa = PBXGroup;
 			children = (
+				02DD10912A20F5AE00DCFC0D /* Modules */,
 				02DD105D2A20F3E100DCFC0D /* ios-study-assignment */,
 				02DD10742A20F3E500DCFC0D /* ios-study-assignmentTests */,
 				02DD107E2A20F3E500DCFC0D /* ios-study-assignmentUITests */,
 				02DD105C2A20F3E100DCFC0D /* Products */,
+				02DD10952A20F76100DCFC0D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -142,6 +153,23 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
+		02DD10912A20F5AE00DCFC0D /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				02DD10942A20F65300DCFC0D /* Common */,
+				02DD10932A20F63A00DCFC0D /* Domain */,
+				02DD10922A20F61A00DCFC0D /* Network */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		02DD10952A20F76100DCFC0D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -158,6 +186,11 @@
 			dependencies = (
 			);
 			name = "ios-study-assignment";
+			packageProductDependencies = (
+				02DD10962A20F76100DCFC0D /* Common */,
+				02DD10982A20F76100DCFC0D /* Domain */,
+				02DD109A2A20F76100DCFC0D /* Network */,
+			);
 			productName = "ios-study-assignment";
 			productReference = 02DD105B2A20F3E100DCFC0D /* ios-study-assignment.app */;
 			productType = "com.apple.product-type.application";
@@ -599,6 +632,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		02DD10962A20F76100DCFC0D /* Common */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Common;
+		};
+		02DD10982A20F76100DCFC0D /* Domain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Domain;
+		};
+		02DD109A2A20F76100DCFC0D /* Network */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Network;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 02DD10532A20F3E100DCFC0D /* Project object */;
 }
