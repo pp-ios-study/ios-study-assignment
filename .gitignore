@@ -58,4 +58,6 @@ DerivedData/
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 
+## SPM
+Package.resolved
 

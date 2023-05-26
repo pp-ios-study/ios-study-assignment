@@ -16,6 +16,11 @@
 		02DD10972A20F76100DCFC0D /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD10962A20F76100DCFC0D /* Common */; };
 		02DD10992A20F76100DCFC0D /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD10982A20F76100DCFC0D /* Domain */; };
 		02DD109B2A20F76100DCFC0D /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD109A2A20F76100DCFC0D /* Network */; };
+		02DD109E2A20FC8800DCFC0D /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD109D2A20FC8800DCFC0D /* SwinjectAutoregistration */; };
+		02DD10A12A20FCCA00DCFC0D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD10A02A20FCCA00DCFC0D /* SnapKit */; };
+		02DD10A42A20FD0200DCFC0D /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD10A32A20FD0200DCFC0D /* RxCocoa */; };
+		02DD10A62A20FD0200DCFC0D /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD10A52A20FD0200DCFC0D /* RxRelay */; };
+		02DD10A82A20FD0300DCFC0D /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD10A72A20FD0300DCFC0D /* RxSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,9 +61,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02DD10A42A20FD0200DCFC0D /* RxCocoa in Frameworks */,
 				02DD109B2A20F76100DCFC0D /* Network in Frameworks */,
+				02DD10A62A20FD0200DCFC0D /* RxRelay in Frameworks */,
 				02DD10992A20F76100DCFC0D /* Domain in Frameworks */,
 				02DD10972A20F76100DCFC0D /* Common in Frameworks */,
+				02DD109E2A20FC8800DCFC0D /* SwinjectAutoregistration in Frameworks */,
+				02DD10A82A20FD0300DCFC0D /* RxSwift in Frameworks */,
+				02DD10A12A20FCCA00DCFC0D /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,6 +200,11 @@
 				02DD10962A20F76100DCFC0D /* Common */,
 				02DD10982A20F76100DCFC0D /* Domain */,
 				02DD109A2A20F76100DCFC0D /* Network */,
+				02DD109D2A20FC8800DCFC0D /* SwinjectAutoregistration */,
+				02DD10A02A20FCCA00DCFC0D /* SnapKit */,
+				02DD10A32A20FD0200DCFC0D /* RxCocoa */,
+				02DD10A52A20FD0200DCFC0D /* RxRelay */,
+				02DD10A72A20FD0300DCFC0D /* RxSwift */,
 			);
 			productName = "ios-study-assignment";
 			productReference = 02DD105B2A20F3E100DCFC0D /* ios-study-assignment.app */;
@@ -263,6 +278,11 @@
 				Base,
 			);
 			mainGroup = 02DD10522A20F3E100DCFC0D;
+			packageReferences = (
+				02DD109C2A20FC8800DCFC0D /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */,
+				02DD109F2A20FCCA00DCFC0D /* XCRemoteSwiftPackageReference "SnapKit" */,
+				02DD10A22A20FD0200DCFC0D /* XCRemoteSwiftPackageReference "RxSwift" */,
+			);
 			productRefGroup = 02DD105C2A20F3E100DCFC0D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -629,6 +649,33 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		02DD109C2A20FC8800DCFC0D /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/SwinjectAutoregistration.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.3;
+			};
+		};
+		02DD109F2A20FCCA00DCFC0D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
+		02DD10A22A20FD0200DCFC0D /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		02DD10962A20F76100DCFC0D /* Common */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -641,6 +688,31 @@
 		02DD109A2A20F76100DCFC0D /* Network */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Network;
+		};
+		02DD109D2A20FC8800DCFC0D /* SwinjectAutoregistration */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02DD109C2A20FC8800DCFC0D /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */;
+			productName = SwinjectAutoregistration;
+		};
+		02DD10A02A20FCCA00DCFC0D /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02DD109F2A20FCCA00DCFC0D /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		02DD10A32A20FD0200DCFC0D /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02DD10A22A20FD0200DCFC0D /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		02DD10A52A20FD0200DCFC0D /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02DD10A22A20FD0200DCFC0D /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		02DD10A72A20FD0300DCFC0D /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02DD10A22A20FD0200DCFC0D /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
