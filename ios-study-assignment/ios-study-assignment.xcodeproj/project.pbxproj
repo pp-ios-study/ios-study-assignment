@@ -21,6 +21,16 @@
 		02DD10A42A20FD0200DCFC0D /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD10A32A20FD0200DCFC0D /* RxCocoa */; };
 		02DD10A62A20FD0200DCFC0D /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD10A52A20FD0200DCFC0D /* RxRelay */; };
 		02DD10A82A20FD0300DCFC0D /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 02DD10A72A20FD0300DCFC0D /* RxSwift */; };
+		02DD10AC2A20FF3F00DCFC0D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10AB2A20FF3F00DCFC0D /* SearchViewController.swift */; };
+		02DD10AE2A20FFB300DCFC0D /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10AD2A20FFB300DCFC0D /* AppCoordinator.swift */; };
+		02DD10B02A2101C500DCFC0D /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10AF2A2101C500DCFC0D /* SessionService.swift */; };
+		02DD10B22A2101EE00DCFC0D /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10B12A2101ED00DCFC0D /* SearchCoordinator.swift */; };
+		02DD10B52A21025400DCFC0D /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10B42A21025400DCFC0D /* LaunchViewController.swift */; };
+		02DD10B72A21026A00DCFC0D /* LaunchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10B62A21026A00DCFC0D /* LaunchCoordinator.swift */; };
+		02DD10BA2A2102BD00DCFC0D /* Container+Coordinators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10B92A2102BD00DCFC0D /* Container+Coordinators.swift */; };
+		02DD10BC2A21031700DCFC0D /* Container+RegisterDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10BB2A21031700DCFC0D /* Container+RegisterDependencies.swift */; };
+		02DD10BE2A21032E00DCFC0D /* Container+Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10BD2A21032E00DCFC0D /* Container+Services.swift */; };
+		02DD10C02A21035500DCFC0D /* Container+ViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10BF2A21035500DCFC0D /* Container+ViewModels.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +64,16 @@
 		02DD10922A20F61A00DCFC0D /* Network */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Network; sourceTree = "<group>"; };
 		02DD10932A20F63A00DCFC0D /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
 		02DD10942A20F65300DCFC0D /* Common */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Common; sourceTree = "<group>"; };
+		02DD10AB2A20FF3F00DCFC0D /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		02DD10AD2A20FFB300DCFC0D /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		02DD10AF2A2101C500DCFC0D /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
+		02DD10B12A2101ED00DCFC0D /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
+		02DD10B42A21025400DCFC0D /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		02DD10B62A21026A00DCFC0D /* LaunchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCoordinator.swift; sourceTree = "<group>"; };
+		02DD10B92A2102BD00DCFC0D /* Container+Coordinators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Coordinators.swift"; sourceTree = "<group>"; };
+		02DD10BB2A21031700DCFC0D /* Container+RegisterDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+RegisterDependencies.swift"; sourceTree = "<group>"; };
+		02DD10BD2A21032E00DCFC0D /* Container+Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Services.swift"; sourceTree = "<group>"; };
+		02DD10BF2A21035500DCFC0D /* Container+ViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+ViewModels.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,7 +169,9 @@
 		02DD108F2A20F4D000DCFC0D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				02DD10B82A2102A800DCFC0D /* DIContainer */,
 				02DD10902A20F4D900DCFC0D /* Application */,
+				02DD10A92A20FE6200DCFC0D /* Main */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -157,8 +179,10 @@
 		02DD10902A20F4D900DCFC0D /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				02DD10AD2A20FFB300DCFC0D /* AppCoordinator.swift */,
 				02DD105E2A20F3E100DCFC0D /* AppDelegate.swift */,
 				02DD10602A20F3E100DCFC0D /* SceneDelegate.swift */,
+				02DD10AF2A2101C500DCFC0D /* SessionService.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -178,6 +202,44 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		02DD10A92A20FE6200DCFC0D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				02DD10B32A21024500DCFC0D /* Launch */,
+				02DD10AA2A20FEEB00DCFC0D /* Search */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		02DD10AA2A20FEEB00DCFC0D /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				02DD10AB2A20FF3F00DCFC0D /* SearchViewController.swift */,
+				02DD10B12A2101ED00DCFC0D /* SearchCoordinator.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		02DD10B32A21024500DCFC0D /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				02DD10B42A21025400DCFC0D /* LaunchViewController.swift */,
+				02DD10B62A21026A00DCFC0D /* LaunchCoordinator.swift */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
+		02DD10B82A2102A800DCFC0D /* DIContainer */ = {
+			isa = PBXGroup;
+			children = (
+				02DD10BB2A21031700DCFC0D /* Container+RegisterDependencies.swift */,
+				02DD10B92A2102BD00DCFC0D /* Container+Coordinators.swift */,
+				02DD10BD2A21032E00DCFC0D /* Container+Services.swift */,
+				02DD10BF2A21035500DCFC0D /* Container+ViewModels.swift */,
+			);
+			path = DIContainer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -324,7 +386,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02DD10BA2A2102BD00DCFC0D /* Container+Coordinators.swift in Sources */,
+				02DD10AE2A20FFB300DCFC0D /* AppCoordinator.swift in Sources */,
+				02DD10C02A21035500DCFC0D /* Container+ViewModels.swift in Sources */,
+				02DD10B72A21026A00DCFC0D /* LaunchCoordinator.swift in Sources */,
+				02DD10BE2A21032E00DCFC0D /* Container+Services.swift in Sources */,
+				02DD10BC2A21031700DCFC0D /* Container+RegisterDependencies.swift in Sources */,
+				02DD10B02A2101C500DCFC0D /* SessionService.swift in Sources */,
+				02DD10AC2A20FF3F00DCFC0D /* SearchViewController.swift in Sources */,
 				02DD105F2A20F3E100DCFC0D /* AppDelegate.swift in Sources */,
+				02DD10B22A2101EE00DCFC0D /* SearchCoordinator.swift in Sources */,
+				02DD10B52A21025400DCFC0D /* LaunchViewController.swift in Sources */,
 				02DD10612A20F3E100DCFC0D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
