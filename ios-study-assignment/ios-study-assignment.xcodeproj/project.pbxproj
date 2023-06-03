@@ -169,8 +169,8 @@
 		02DD108F2A20F4D000DCFC0D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				02DD10B82A2102A800DCFC0D /* DIContainer */,
 				02DD10902A20F4D900DCFC0D /* Application */,
+				02DD10B82A2102A800DCFC0D /* DIContainer */,
 				02DD10A92A20FE6200DCFC0D /* Main */,
 			);
 			path = Sources;
