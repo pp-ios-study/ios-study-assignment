@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		023E52712A2B9432007D3A2A /* SearchHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E52702A2B9432007D3A2A /* SearchHistoryTableViewCell.swift */; };
+		023E52752A2B9480007D3A2A /* SearchItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E52742A2B9480007D3A2A /* SearchItemTableViewCell.swift */; };
+		023E52782A2B94C1007D3A2A /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E52772A2B94C1007D3A2A /* SearchListViewController.swift */; };
 		02DD105F2A20F3E100DCFC0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD105E2A20F3E100DCFC0D /* AppDelegate.swift */; };
 		02DD10612A20F3E100DCFC0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10602A20F3E100DCFC0D /* SceneDelegate.swift */; };
 		02DD10682A20F3E500DCFC0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02DD10672A20F3E500DCFC0D /* Assets.xcassets */; };
@@ -51,6 +54,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		023E52702A2B9432007D3A2A /* SearchHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryTableViewCell.swift; sourceTree = "<group>"; };
+		023E52742A2B9480007D3A2A /* SearchItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemTableViewCell.swift; sourceTree = "<group>"; };
+		023E52772A2B94C1007D3A2A /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
 		02DD105B2A20F3E100DCFC0D /* ios-study-assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-study-assignment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02DD105E2A20F3E100DCFC0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02DD10602A20F3E100DCFC0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +115,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		023E52762A2B94A4007D3A2A /* SearchList */ = {
+			isa = PBXGroup;
+			children = (
+				023E52772A2B94C1007D3A2A /* SearchListViewController.swift */,
+			);
+			path = SearchList;
+			sourceTree = "<group>";
+		};
 		02DD10522A20F3E100DCFC0D = {
 			isa = PBXGroup;
 			children = (
@@ -209,6 +223,7 @@
 			children = (
 				02DD10B32A21024500DCFC0D /* Launch */,
 				02DD10AA2A20FEEB00DCFC0D /* Search */,
+				023E52762A2B94A4007D3A2A /* SearchList */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -217,6 +232,8 @@
 			isa = PBXGroup;
 			children = (
 				02DD10AB2A20FF3F00DCFC0D /* SearchViewController.swift */,
+				023E52702A2B9432007D3A2A /* SearchHistoryTableViewCell.swift */,
+				023E52742A2B9480007D3A2A /* SearchItemTableViewCell.swift */,
 				02DD10B12A2101ED00DCFC0D /* SearchCoordinator.swift */,
 			);
 			path = Search;
@@ -392,9 +409,12 @@
 				02DD10B72A21026A00DCFC0D /* LaunchCoordinator.swift in Sources */,
 				02DD10BE2A21032E00DCFC0D /* Container+Services.swift in Sources */,
 				02DD10BC2A21031700DCFC0D /* Container+RegisterDependencies.swift in Sources */,
+				023E52752A2B9480007D3A2A /* SearchItemTableViewCell.swift in Sources */,
+				023E52782A2B94C1007D3A2A /* SearchListViewController.swift in Sources */,
 				02DD10B02A2101C500DCFC0D /* SessionService.swift in Sources */,
 				02DD10AC2A20FF3F00DCFC0D /* SearchViewController.swift in Sources */,
 				02DD105F2A20F3E100DCFC0D /* AppDelegate.swift in Sources */,
+				023E52712A2B9432007D3A2A /* SearchHistoryTableViewCell.swift in Sources */,
 				02DD10B22A2101EE00DCFC0D /* SearchCoordinator.swift in Sources */,
 				02DD10B52A21025400DCFC0D /* LaunchViewController.swift in Sources */,
 				02DD10612A20F3E100DCFC0D /* SceneDelegate.swift in Sources */,
