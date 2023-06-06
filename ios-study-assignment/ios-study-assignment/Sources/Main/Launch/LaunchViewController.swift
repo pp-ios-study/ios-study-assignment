@@ -12,6 +12,17 @@ class LaunchViewController: UIViewController {
     // MARK: - Properties
     private let viewModel: LaunchViewModelProtocol
     
+    // MARK: - Init
+    init(viewModel: LaunchViewModelProtocol) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,17 +34,6 @@ class LaunchViewController: UIViewController {
         super.viewWillAppear(animated)
         
         viewModel.fetch()
-    }
-    
-    // MARK: - Init
-    init(viewModel: LaunchViewModelProtocol) {
-        self.viewModel = viewModel
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 

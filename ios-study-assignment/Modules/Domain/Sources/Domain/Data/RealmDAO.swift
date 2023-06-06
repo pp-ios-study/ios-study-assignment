@@ -9,27 +9,27 @@ import Foundation
 
 import RealmSwift
 
-protocol RealmEntity {
+public protocol RealmEntity {
     associatedtype ENTITY
     
     func mapping(entity: ENTITY)
     func getEntity() -> ENTITY
 }
 
-protocol RealmEntityMapper {
+public protocol RealmEntityMapper {
     associatedtype REALM_ENTITY
     
     func getRealmEntity() -> REALM_ENTITY
 }
 
-class RealmDAO<VALUE: RealmEntityMapper> where VALUE.REALM_ENTITY: Object, VALUE.REALM_ENTITY: RealmEntity {
+public class RealmDAO<VALUE: RealmEntityMapper> where VALUE.REALM_ENTITY: Object, VALUE.REALM_ENTITY: RealmEntity {
     /// KEY 타입 설정
-    typealias KEY = String
+    public typealias KEY = String
     /// 검색 기록을 관리할 realm 인스턴스
-    var realm: Realm!
+    public var realm: Realm!
     
     /// realm 초기화
-    init() {
+    public init() {
         guard let realm = try? Realm(configuration: getRealmConfig()) else {
             print(RealmError.realmInitError.localizedDescription)
             return
@@ -39,14 +39,14 @@ class RealmDAO<VALUE: RealmEntityMapper> where VALUE.REALM_ENTITY: Object, VALUE
     
     /// realm 정보 반환
     /// - returns: Realm.Configuration
-    func getRealmConfig() -> Realm.Configuration {
+    public func getRealmConfig() -> Realm.Configuration {
         return Realm.Configuration()
     }
     
     /// realm에 값 저장
     /// - parameter value: 저장할 값
     /// - parameter key: 이미 저장된 값인지 판단하기 위한 고유 id
-    func write(value: VALUE, key: KEY) {
+    public func write(value: VALUE, key: KEY) {
         do {
             try realm.write {
                 if let _: VALUE.REALM_ENTITY = realm.object(
@@ -65,7 +65,7 @@ class RealmDAO<VALUE: RealmEntityMapper> where VALUE.REALM_ENTITY: Object, VALUE
     
     /// realm에서 읽은 데이터를 변환해서 리턴
     /// - returns: VALUE 배열
-    func read() -> [VALUE] {
+    public func read() -> [VALUE] {
         let values: [VALUE.REALM_ENTITY] = readEntity()
         
         var result = [VALUE]()
@@ -85,7 +85,7 @@ class RealmDAO<VALUE: RealmEntityMapper> where VALUE.REALM_ENTITY: Object, VALUE
     
     /// realm에 값 제거
     /// - parameter key: 이미 저장된 값인지 판단하기 위한 고유 id
-    func delete(key: KEY) {
+    public func delete(key: KEY) {
         do {
             try realm.write {
                 if let value: VALUE.REALM_ENTITY = realm.object(

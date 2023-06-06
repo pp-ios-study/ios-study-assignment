@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct SearchResponse: Codable {
+public struct SearchResponse: Codable {
     let resultCount: Int?
     let results: [Search]?
 }
 
-struct Search: Codable, Hashable {
+public struct Search: Codable, Hashable {
     /// 스크린샷
     let screenshotUrls: [String]?
     /// 사이즈별 아트워크

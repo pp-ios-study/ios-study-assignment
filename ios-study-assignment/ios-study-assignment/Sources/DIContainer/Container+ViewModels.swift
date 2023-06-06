@@ -11,5 +11,6 @@ import SwinjectAutoregistration
 extension Container {
     func registerViewModels() {
         autoregister(LaunchViewModelProtocol.self, initializer: LaunchViewModel.init)
+        autoregister(SearchViewModelProtocol.self, initializer: SearchViewModel.init)
     }
 }

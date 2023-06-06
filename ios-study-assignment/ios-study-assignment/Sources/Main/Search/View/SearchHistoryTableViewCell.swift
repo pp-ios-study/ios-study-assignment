@@ -9,7 +9,7 @@ import UIKit
 
 import RxSwift
 
-class SearchHistoryTableViewCell: UITableViewCell {
+final class SearchHistoryTableViewCell: UITableViewCell {
     
     // MARK: - UI
     private lazy var searchHistoryTextLabel: UILabel = {
@@ -56,6 +56,7 @@ extension SearchHistoryTableViewCell {
         }
     }
     
-    func configureCell() {
+    func configureCell(text: String) {
+        searchHistoryTextLabel.text = text
     }
 }

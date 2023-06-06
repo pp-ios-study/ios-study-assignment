@@ -13,12 +13,15 @@ import RxCocoa
 
 class SearchCoordinator: BaseCoordinator {
 
+    private let viewModel: SearchViewModelProtocol
     private let disposeBag = DisposeBag()
 
-    override init() { }
+    init(viewModel: SearchViewModelProtocol) {
+        self.viewModel = viewModel
+    }
 
     override func start() {
-        let viewController = SearchViewController()
+        let viewController = SearchViewController(viewModel: viewModel)
 
         navigationController.isNavigationBarHidden = false
         navigationController.viewControllers = [viewController]

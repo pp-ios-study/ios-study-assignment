@@ -20,12 +20,7 @@ class SearchViewController: UIViewController {
     }
     
     // MARK: - UI
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.registerCell(SearchHistoryTableViewCell.self)
-        tableView.registerCell(SearchItemTableViewCell.self)
-        return tableView
-    }()
+    private lazy var tableView: UITableView = UITableView()
     private var searchController: UISearchController!
     private var searchListViewController: SearchListViewController!
     
@@ -39,7 +34,19 @@ class SearchViewController: UIViewController {
         }
     }
     
+    private let viewModel: SearchViewModelProtocol
     private let disposeBag: DisposeBag = DisposeBag()
+    
+    // MARK: - Init
+    init(viewModel: SearchViewModelProtocol) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -49,7 +56,11 @@ class SearchViewController: UIViewController {
         
         setNavigation()
         setUI()
+        setTableView()
+        
         setTapGesture()
+        
+        requestSearchHistory()
     }
     
     // MARK: - Set Navigation
@@ -83,6 +94,14 @@ class SearchViewController: UIViewController {
         }
     }
     
+    // MARK: - Set Table View
+    private func setTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.registerCell(SearchItemTableViewCell.self)
+        tableView.registerCell(SearchHistoryTableViewCell.self)
+    }
+    
     // MARK: - Set Gesture
     func setTapGesture() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboardTouchOutside))
@@ -101,6 +120,40 @@ class SearchViewController: UIViewController {
     
     // MARK: - Binding
     private func bind() {
+        viewModel.historyList
+            .subscribe(onNext: { searchHistoryList in
+                self.originalSearchHistoryList = searchHistoryList.map { $0.id }
+                self.searchHistoryList = searchHistoryList.map { $0.id }
+                self.tableView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        guard let searchController = self.navigationItem.searchController else { return }
+        searchController.searchBar.rx.text
+            .orEmpty
+            .bind(to: viewModel.text)
+            .disposed(by: disposeBag)
+        
+        searchController.searchBar.rx.searchButtonClicked
+            .bind(to: viewModel.searchButtonClicked)
+            .disposed(by: disposeBag)
+        
+        searchController.searchBar.rx.cancelButtonClicked
+            .bind(to: viewModel.cancelButtonClicked)
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Realm
+    /// 검색어 저장
+    /// - parameter keyword: 검색어
+    private func saveSearchHistory(with keyword: String) {
+        viewModel.saveKeyword(keyword: keyword)
+        
+        requestSearchHistory()
+    }
+    
+    private func requestSearchHistory() {
+        viewModel.getSearchHistory()
     }
 }
 
@@ -115,6 +168,14 @@ extension SearchViewController: UISearchBarDelegate {
     /// 키보드에서 search 버튼을 눌렀을 때
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        
+        inputText = searchBar.text ?? ""
+        
+        if !inputText.isEmpty {
+            saveSearchHistory(with: inputText)
+            
+            searchController.showsSearchResultsController = true
+        }
     }
     
     /// 검색창의 취소 버튼을 눌렀을 때
@@ -181,14 +242,22 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch inputState {
         case .history:
-            guard let cell = tableView.dequeueCell(SearchHistoryTableViewCell.self, for: indexPath) else {
+            guard let cell = tableView.dequeueCell(
+                SearchHistoryTableViewCell.self,
+                for: indexPath
+            ) else {
                 return UITableViewCell()
             }
+            cell.configureCell(text: searchHistoryList[indexPath.row])
             return cell
         case .typing:
-            guard let cell = tableView.dequeueCell(SearchItemTableViewCell.self, for: indexPath) else {
+            guard let cell = tableView.dequeueCell(
+                SearchItemTableViewCell.self,
+                for: indexPath
+            ) else {
                 return UITableViewCell()
             }
+//            cell.configureCell(keyword: searchHistoryList[indexPath.row])
             return cell
         }
     }

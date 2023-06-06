@@ -12,36 +12,41 @@ import RealmSwift
 let HISTORY_UPDATE_NOTIFICATION: NSNotification.Name = NSNotification.Name("HistoryUpdate")
 
 // 검색 기록
-struct SearchHistory: Equatable, Identifiable {
+public struct SearchHistory: Equatable, Identifiable {
     /// 검색 기록 텍스트
-    var id: String
+    public var id: String
     /// 검색한 시간
-    var date: Date
+    public var date: Date
     
-    static func > (lhs: SearchHistory, rhs: SearchHistory) -> Bool {
+    public init(id: String, date: Date) {
+        self.id = id
+        self.date = date
+    }
+    
+    public static func > (lhs: SearchHistory, rhs: SearchHistory) -> Bool {
         return lhs.date > rhs.date
     }
     
-    static func == (lhs: SearchHistory, rhs: SearchHistory) -> Bool {
+    public static func == (lhs: SearchHistory, rhs: SearchHistory) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
 extension SearchHistory: RealmEntityMapper {
-    typealias REALM_ENTITY = SearchHistoryRealmEntity
+    public typealias REALM_ENTITY = SearchHistoryRealmEntity
     
     /// 인스턴스를 RealmEntity로 변환해서 반환
     /// - returns: RealmEntity
-    func getRealmEntity() -> REALM_ENTITY {
+    public func getRealmEntity() -> REALM_ENTITY {
         let mapper = SearchHistoryRealmEntity()
         mapper.mapping(entity: self)
         return mapper
     }
 }
 
-class SearchHistoryRealmEntity: Object, RealmEntity {
+public class SearchHistoryRealmEntity: Object, RealmEntity {
     /// ENTITY 타입 설정
-    typealias ENTITY = SearchHistory
+    public typealias ENTITY = SearchHistory
     
     /// 검색 기록 텍스트 (primary key)
     @objc dynamic var id = ""
@@ -49,19 +54,19 @@ class SearchHistoryRealmEntity: Object, RealmEntity {
     @objc dynamic var date = Date()
     
     /// id를 primary key로 설정
-    override static func primaryKey() -> String? {
+    public override static func primaryKey() -> String? {
         return "id"
     }
     
     /// 인스턴스를 RealmEntity로 매핑
-    func mapping(entity: ENTITY) {
+    public func mapping(entity: ENTITY) {
         id = entity.id
         date = entity.date
     }
     
     /// 인스턴스를 원래의 Entity로 변환해서 반환
     /// - returns: Entity
-    func getEntity() -> ENTITY {
+    public func getEntity() -> ENTITY {
         return SearchHistory(
             id: id,
             date: date
