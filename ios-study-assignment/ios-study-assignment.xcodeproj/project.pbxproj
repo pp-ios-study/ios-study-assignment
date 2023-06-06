@@ -11,6 +11,7 @@
 		023E52752A2B9480007D3A2A /* SearchItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E52742A2B9480007D3A2A /* SearchItemTableViewCell.swift */; };
 		023E52782A2B94C1007D3A2A /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E52772A2B94C1007D3A2A /* SearchListViewController.swift */; };
 		0278C2C02A2F0B61009CA7CC /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278C2BF2A2F0B61009CA7CC /* LaunchViewModel.swift */; };
+		0278C2C22A2F145A009CA7CC /* LaunchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0278C2C12A2F145A009CA7CC /* LaunchViewController.storyboard */; };
 		02DD105F2A20F3E100DCFC0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD105E2A20F3E100DCFC0D /* AppDelegate.swift */; };
 		02DD10612A20F3E100DCFC0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10602A20F3E100DCFC0D /* SceneDelegate.swift */; };
 		02DD10682A20F3E500DCFC0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02DD10672A20F3E500DCFC0D /* Assets.xcassets */; };
@@ -59,11 +60,12 @@
 		023E52742A2B9480007D3A2A /* SearchItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemTableViewCell.swift; sourceTree = "<group>"; };
 		023E52772A2B94C1007D3A2A /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
 		0278C2BF2A2F0B61009CA7CC /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
+		0278C2C12A2F145A009CA7CC /* LaunchViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchViewController.storyboard; sourceTree = "<group>"; };
 		02DD105B2A20F3E100DCFC0D /* ios-study-assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-study-assignment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02DD105E2A20F3E100DCFC0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02DD10602A20F3E100DCFC0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		02DD10672A20F3E500DCFC0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		02DD106C2A20F3E500DCFC0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02DD106C2A20F3E500DCFC0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		02DD10712A20F3E500DCFC0D /* ios-study-assignmentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-study-assignmentTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02DD10752A20F3E500DCFC0D /* ios_study_assignmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_study_assignmentTests.swift; sourceTree = "<group>"; };
 		02DD107B2A20F3E500DCFC0D /* ios-study-assignmentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-study-assignmentUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +152,7 @@
 		02DD105D2A20F3E100DCFC0D /* ios-study-assignment */ = {
 			isa = PBXGroup;
 			children = (
+				02DD106C2A20F3E500DCFC0D /* Info.plist */,
 				02DD108E2A20F4C100DCFC0D /* Resources */,
 				02DD108F2A20F4D000DCFC0D /* Sources */,
 			);
@@ -176,7 +179,6 @@
 		02DD108E2A20F4C100DCFC0D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				02DD106C2A20F3E500DCFC0D /* Info.plist */,
 				02DD10672A20F3E500DCFC0D /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -185,6 +187,7 @@
 		02DD108F2A20F4D000DCFC0D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				0278C2C12A2F145A009CA7CC /* LaunchViewController.storyboard */,
 				02DD10902A20F4D900DCFC0D /* Application */,
 				02DD10B82A2102A800DCFC0D /* DIContainer */,
 				02DD10A92A20FE6200DCFC0D /* Main */,
@@ -381,6 +384,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0278C2C22A2F145A009CA7CC /* LaunchViewController.storyboard in Resources */,
 				02DD10682A20F3E500DCFC0D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -583,6 +587,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ios-study-assignment/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchViewController.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -611,6 +616,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ios-study-assignment/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchViewController.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
