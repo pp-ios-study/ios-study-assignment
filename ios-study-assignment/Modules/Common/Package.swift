@@ -5,18 +5,21 @@ import PackageDescription
 
 let package = Package(
     name: "Common",
+    platforms: [.iOS(.v16)],
     products: [
         .library(
             name: "Common",
             targets: ["Common"]),
     ],
     dependencies: [
+        .package(path: "../AppModules"),
         .package(path: "../Domain"),
     ],
     targets: [
         .target(
             name: "Common",
             dependencies: [
+                "AppModules",
                 "Domain"
             ]),
         .testTarget(
