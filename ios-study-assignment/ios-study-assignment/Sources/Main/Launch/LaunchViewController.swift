@@ -9,16 +9,36 @@ import UIKit
 
 class LaunchViewController: UIViewController {
     
+    // MARK: - Properties
+    private let viewModel: LaunchViewModelProtocol
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.fetch()
+    }
+    
+    // MARK: - Init
+    init(viewModel: LaunchViewModelProtocol) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
+// MARK: - Set UI
 extension LaunchViewController {
-    // MARK: - Set UI
     private func setUI() {
         self.view.backgroundColor = .white
     }

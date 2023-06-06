@@ -13,12 +13,15 @@ import RxCocoa
 
 class LaunchCoordinator: BaseCoordinator {
 
+    private let viewModel: LaunchViewModelProtocol
     private let disposeBag = DisposeBag()
 
-    override init() { }
+    init(viewModel: LaunchViewModelProtocol) {
+        self.viewModel = viewModel
+    }
 
     override func start() {
-        let viewController = LaunchViewController()
+        let viewController = LaunchViewController(viewModel: viewModel)
 
         navigationController.isNavigationBarHidden = true
         navigationController.viewControllers = [viewController]

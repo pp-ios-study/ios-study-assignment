@@ -10,6 +10,6 @@ import SwinjectAutoregistration
 
 extension Container {
     func registerViewModels() {
-        
+        autoregister(LaunchViewModelProtocol.self, initializer: LaunchViewModel.init)
     }
 }
