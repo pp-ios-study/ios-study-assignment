@@ -13,6 +13,7 @@ let package = Package(
             targets: ["AppModules"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.6.1")),
         .package(url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "7.7.0")),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "6.5.0")),
         .package(url: "https://github.com/RxSwiftCommunity/RxDataSources.git", from: "5.0.0"),
@@ -26,6 +27,7 @@ let package = Package(
         .target(
             name: "AppModules",
             dependencies: [
+                "Alamofire",
                 "Kingfisher",
                 "RxDataSources",
                 "SnapKit",

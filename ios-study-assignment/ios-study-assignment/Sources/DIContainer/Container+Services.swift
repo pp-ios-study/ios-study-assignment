@@ -6,6 +6,7 @@
 //
 
 import Domain
+import Network
 import Swinject
 import SwinjectAutoregistration
 
@@ -13,5 +14,6 @@ extension Container {
     func registerServices() {
         autoregister(SessionServiceProtocol.self, initializer: SessionService.init).inObjectScope(.container)
         autoregister(RealmDAO<SearchHistory>.self, initializer: RealmDAO.init)
+        autoregister(APIProtocol.self, initializer: API.init)
     }
 }

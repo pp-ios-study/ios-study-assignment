@@ -8,64 +8,63 @@
 import Foundation
 
 public struct SearchResponse: Codable {
-    let resultCount: Int?
-    let results: [Search]?
+    public let resultCount: Int?
+    public let results: [Search]?
 }
 
 public struct Search: Codable, Hashable {
     /// 스크린샷
-    let screenshotUrls: [String]?
+    public let screenshotUrls: [String]?
     /// 사이즈별 아트워크
-    let artworkUrl60, artworkUrl100, artworkUrl512: String?
+    public let artworkUrl60, artworkUrl100, artworkUrl512: String?
     /// 개발 앱 리스트 url
-    let artistViewURL: String?
+    public let artistViewURL: String?
     /// 지원 기기 종류
-    let supportedDevices: [String]?
+    public let supportedDevices: [String]?
     /// 검색어 종류
-    let kind: String?
+    public let kind: String?
     /// 입 이용 가능 연령
-    let contentAdvisoryRating: String?
+    public let contentAdvisoryRating: String?
     /// 개발자 이름
-    let sellerName: String?
+    public let sellerName: String?
     /// 릴리즈 노트
-    let releaseNotes: String?
+    public let releaseNotes: String?
     /// 앱 상세 뷰 url
-    let trackViewURL: String?
+    public let trackViewURL: String?
     /// 개발자 ID
-    let artistID: Int?
+    public let artistID: Int?
     /// 개발자명
-    let artistName: String?
+    public let artistName: String?
     /// 장르
-    let genres: [String]?
+    public let genres: [String]?
     /// 가격
-    let price: Int?
+    public let price: Int?
     /// 앱 설명
-    let description: String?
+    public let description: String?
     /// 앱 ID
-    let trackID: Int?
+    public let trackID: Int?
     /// 앱 이름
-    let trackName: String?
+    public let trackName: String?
     /// 앱 순위
-    let trackContentRating: String?
+    public let trackContentRating: String?
     /// 장르 ID 배열
-    let genreIDS: [String]?
+    public let genreIDS: [String]?
     /// 번들 ID
-    let bundleID: String?
+    public let bundleID: String?
     /// 앱 최소 지원 버전
-    let minimumOSVersion: String?
+    public let minimumOSVersion: String?
     /// 언어 지원 코드
-    let languageCodesISO2A: [String]?
+    public let languageCodesISO2A: [String]?
     /// 앱 사이즈
-    let fileSizeBytes: String?
+    public let fileSizeBytes: String?
     /// 개발자 홈페이지 주소
-    let sellerURL: String?
-    let formattedPrice: String?
+    public let sellerURL: String?
     /// 평균 사용자 점수
-    let averageUserRating: Double?
+    public let averageUserRating: Double?
     /// 앱 버전
-    let version: String?
+    public let version: String?
     /// 사용자 리뷰 수
-    let userRatingCount: Int?
+    public let userRatingCount: Int?
 
     enum CodingKeys: String, CodingKey {
         case screenshotUrls
@@ -88,7 +87,6 @@ public struct Search: Codable, Hashable {
         case languageCodesISO2A
         case fileSizeBytes
         case sellerURL = "sellerUrl"
-        case formattedPrice
         case averageUserRating
         case version
         case userRatingCount

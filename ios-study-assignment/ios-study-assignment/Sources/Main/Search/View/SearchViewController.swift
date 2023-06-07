@@ -20,7 +20,14 @@ class SearchViewController: UIViewController {
     }
     
     // MARK: - UI
-    private lazy var tableView: UITableView = UITableView()
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.registerCell(SearchItemTableViewCell.self)
+        tableView.registerCell(SearchHistoryTableViewCell.self)
+        return tableView
+    }()
     private var searchController: UISearchController!
     private var searchListViewController: SearchListViewController!
     
@@ -56,8 +63,6 @@ class SearchViewController: UIViewController {
         
         setNavigation()
         setUI()
-        setTableView()
-        
         setTapGesture()
         
         requestSearchHistory()
@@ -65,7 +70,6 @@ class SearchViewController: UIViewController {
     
     // MARK: - Set Navigation
     private func setNavigation() {
-        guard let navigationController = self.navigationController else { return }
         searchListViewController = SearchListViewController()
         
         searchController = UISearchController(searchResultsController: searchListViewController)
@@ -92,14 +96,6 @@ class SearchViewController: UIViewController {
         tableView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
-    }
-    
-    // MARK: - Set Table View
-    private func setTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.registerCell(SearchItemTableViewCell.self)
-        tableView.registerCell(SearchHistoryTableViewCell.self)
     }
     
     // MARK: - Set Gesture

@@ -8,11 +8,14 @@
 import Foundation
 
 import Domain
+import Network
 import RxSwift
 import RxCocoa
 
 protocol SearchViewModelInput {
     var disposeBag: DisposeBag { get }
+    var service: APIProtocol { get }
+    var realm: RealmDAO<SearchHistory> { get }
     var text: PublishSubject<String> { get }
     var searchButtonClicked: PublishSubject<ControlEvent<Void>.Element> { get }
     var cancelButtonClicked: PublishSubject<ControlEvent<Void>.Element> { get }
@@ -20,6 +23,9 @@ protocol SearchViewModelInput {
 
 protocol SearchViewModelOutput {
     var historyList: PublishRelay<[SearchHistory]> { get }
+    var searchList: PublishRelay<[Search]> { get }
+    var isLoading: PublishRelay<Bool> { get }
+    var isEmpty: PublishRelay<Bool> { get }
     
     func getSearchHistory()
     func saveKeyword(keyword: String)
@@ -33,6 +39,7 @@ final class SearchViewModel: SearchViewModelProtocol {
     // MARK: - Input
     let disposeBag: DisposeBag = DisposeBag()
     let realm: RealmDAO<SearchHistory>
+    let service: APIProtocol
     
     let text = PublishSubject<String>()
     let searchButtonClicked = PublishSubject<ControlEvent<Void>.Element>()
@@ -40,9 +47,15 @@ final class SearchViewModel: SearchViewModelProtocol {
     
     // MARK: - Output
     let historyList = PublishRelay<[SearchHistory]>()
+    let searchList = PublishRelay<[Search]>()
+    let isLoading = PublishRelay<Bool>()
+    let isEmpty = PublishRelay<Bool>()
     
-    init(realm: RealmDAO<SearchHistory>) {
+    init(realm: RealmDAO<SearchHistory>, service: APIProtocol) {
         self.realm = realm
+        self.service = service
+        
+        bind()
     }
 }
 
@@ -65,5 +78,26 @@ extension SearchViewModel {
         realm.delete(key: keyword)
         
         getSearchHistory()
+    }
+}
+
+// MARK: - Networking
+extension SearchViewModel {
+    func bind() {
+        searchButtonClicked
+            .withLatestFrom(text)
+            .subscribe(onNext: { text in
+                self.isLoading.accept(true)
+                
+                Task {
+                    let response = try await self.service.requestRequest(keyword: text).fetch()
+                    
+                    guard let results = response.results else { return }
+                    self.searchList.accept(results)
+                    self.isEmpty.accept(results.isEmpty)
+                    self.isLoading.accept(false)
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
