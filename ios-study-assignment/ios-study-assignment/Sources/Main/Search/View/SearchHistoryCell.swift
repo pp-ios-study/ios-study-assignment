@@ -1,5 +1,5 @@
 //
-//  SearchHistoryTableViewCell.swift
+//  SearchHistoryCell.swift
 //  ios-study-assignment
 //
 //  Created by 최승명 on 2023/06/04.
@@ -9,7 +9,7 @@ import UIKit
 
 import RxSwift
 
-final class SearchHistoryTableViewCell: UITableViewCell {
+final class SearchHistoryCell: UITableViewCell {
     
     // MARK: - UI
     private lazy var searchHistoryTextLabel: UILabel = {
@@ -38,7 +38,7 @@ final class SearchHistoryTableViewCell: UITableViewCell {
 }
 
 // MARK: - Set UI
-extension SearchHistoryTableViewCell {
+extension SearchHistoryCell {
     private func setUI() {
         self.contentView.addSubview(searchHistoryTextLabel)
         searchHistoryTextLabel.snp.makeConstraints {

@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		023E52712A2B9432007D3A2A /* SearchHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E52702A2B9432007D3A2A /* SearchHistoryTableViewCell.swift */; };
-		023E52752A2B9480007D3A2A /* SearchItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E52742A2B9480007D3A2A /* SearchItemTableViewCell.swift */; };
+		023E52712A2B9432007D3A2A /* SearchHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E52702A2B9432007D3A2A /* SearchHistoryCell.swift */; };
+		023E52752A2B9480007D3A2A /* SearchMatchItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E52742A2B9480007D3A2A /* SearchMatchItemCell.swift */; };
 		023E52782A2B94C1007D3A2A /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E52772A2B94C1007D3A2A /* SearchListViewController.swift */; };
 		0278C2C02A2F0B61009CA7CC /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278C2BF2A2F0B61009CA7CC /* LaunchViewModel.swift */; };
 		0278C2C22A2F145A009CA7CC /* LaunchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0278C2C12A2F145A009CA7CC /* LaunchViewController.storyboard */; };
@@ -53,8 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		023E52702A2B9432007D3A2A /* SearchHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryTableViewCell.swift; sourceTree = "<group>"; };
-		023E52742A2B9480007D3A2A /* SearchItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemTableViewCell.swift; sourceTree = "<group>"; };
+		023E52702A2B9432007D3A2A /* SearchHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryCell.swift; sourceTree = "<group>"; };
+		023E52742A2B9480007D3A2A /* SearchMatchItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMatchItemCell.swift; sourceTree = "<group>"; };
 		023E52772A2B94C1007D3A2A /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
 		0278C2BF2A2F0B61009CA7CC /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
 		0278C2C12A2F145A009CA7CC /* LaunchViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchViewController.storyboard; sourceTree = "<group>"; };
@@ -127,8 +127,8 @@
 			isa = PBXGroup;
 			children = (
 				02DD10AB2A20FF3F00DCFC0D /* SearchViewController.swift */,
-				023E52702A2B9432007D3A2A /* SearchHistoryTableViewCell.swift */,
-				023E52742A2B9480007D3A2A /* SearchItemTableViewCell.swift */,
+				023E52702A2B9432007D3A2A /* SearchHistoryCell.swift */,
+				023E52742A2B9480007D3A2A /* SearchMatchItemCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -144,6 +144,7 @@
 		0278C2C52A2F1521009CA7CC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				023E52772A2B94C1007D3A2A /* SearchListViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -151,7 +152,6 @@
 		0278C2C62A2F1526009CA7CC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				023E52772A2B94C1007D3A2A /* SearchListViewController.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -438,13 +438,13 @@
 				02DD10B72A21026A00DCFC0D /* LaunchCoordinator.swift in Sources */,
 				02DD10BE2A21032E00DCFC0D /* Container+Services.swift in Sources */,
 				02DD10BC2A21031700DCFC0D /* Container+RegisterDependencies.swift in Sources */,
-				023E52752A2B9480007D3A2A /* SearchItemTableViewCell.swift in Sources */,
+				023E52752A2B9480007D3A2A /* SearchMatchItemCell.swift in Sources */,
 				0278C2C02A2F0B61009CA7CC /* LaunchViewModel.swift in Sources */,
 				023E52782A2B94C1007D3A2A /* SearchListViewController.swift in Sources */,
 				02DD10B02A2101C500DCFC0D /* SessionService.swift in Sources */,
 				02DD10AC2A20FF3F00DCFC0D /* SearchViewController.swift in Sources */,
 				02DD105F2A20F3E100DCFC0D /* AppDelegate.swift in Sources */,
-				023E52712A2B9432007D3A2A /* SearchHistoryTableViewCell.swift in Sources */,
+				023E52712A2B9432007D3A2A /* SearchHistoryCell.swift in Sources */,
 				02DD10B22A2101EE00DCFC0D /* SearchCoordinator.swift in Sources */,
 				0278C2C82A2F1585009CA7CC /* SearchViewModel.swift in Sources */,
 				02DD10B52A21025400DCFC0D /* LaunchViewController.swift in Sources */,

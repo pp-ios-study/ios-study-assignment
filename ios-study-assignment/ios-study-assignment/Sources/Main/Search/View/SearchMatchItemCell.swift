@@ -1,5 +1,5 @@
 //
-//  SearchItemTableViewCell.swift
+//  SearchMatchItemCell.swift
 //  ios-study-assignment
 //
 //  Created by 최승명 on 2023/06/04.
@@ -9,7 +9,7 @@ import UIKit
 
 import RxSwift
 
-class SearchItemTableViewCell: UITableViewCell {
+class SearchMatchItemCell: UITableViewCell {
     
     // MARK: - UI
     private lazy var cellImageView: UIImageView = {
@@ -39,7 +39,7 @@ class SearchItemTableViewCell: UITableViewCell {
 }
 
 // MARK: - Set UI
-extension SearchItemTableViewCell {
+extension SearchMatchItemCell {
     private func setUI() {
         self.contentView.addSubview(cellImageView)
         cellImageView.snp.makeConstraints {

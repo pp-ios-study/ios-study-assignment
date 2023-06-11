@@ -24,8 +24,8 @@ class SearchViewController: UIViewController {
         let tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerCell(SearchItemTableViewCell.self)
-        tableView.registerCell(SearchHistoryTableViewCell.self)
+        tableView.registerCell(SearchMatchItemCell.self)
+        tableView.registerCell(SearchHistoryCell.self)
         return tableView
     }()
     private var searchController: UISearchController!
@@ -239,7 +239,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         switch inputState {
         case .history:
             guard let cell = tableView.dequeueCell(
-                SearchHistoryTableViewCell.self,
+                SearchHistoryCell.self,
                 for: indexPath
             ) else {
                 return UITableViewCell()
@@ -248,7 +248,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         case .typing:
             guard let cell = tableView.dequeueCell(
-                SearchItemTableViewCell.self,
+                SearchMatchItemCell.self,
                 for: indexPath
             ) else {
                 return UITableViewCell()
