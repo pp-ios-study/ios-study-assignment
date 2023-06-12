@@ -9,8 +9,49 @@ import Foundation
 
 import Domain
 import Network
-import RxSwift
 import RxCocoa
+import RxDataSources
+import RxSwift
+
+enum SectionModel: SectionModelType {
+    
+    typealias Item = SearchItem
+    
+    enum SearchItem {
+        case history(String)
+        case typing(String)
+    }
+    
+    case history(items: [Item])
+    case typing(items: [Item])
+    
+    init(original: SectionModel, items: [Item]) {
+        switch original {
+        case .history(items: let items):
+            self = .history(items: items)
+        case .typing(items: let items):
+            self = .typing(items: items)
+        }
+    }
+    
+    var items: [SearchItem] {
+        switch self {
+        case .history(items: let items):
+            return items
+        case .typing(items: let items):
+            return items
+        }
+    }
+    
+    var headerTitle: String? {
+        switch self {
+        case .history:
+            return "최근 검색어"
+        case .typing:
+            return nil
+        }
+    }
+}
 
 protocol SearchViewModelInput {
     var disposeBag: DisposeBag { get }
@@ -22,13 +63,16 @@ protocol SearchViewModelInput {
 }
 
 protocol SearchViewModelOutput {
-    var historyList: PublishRelay<[SearchHistory]> { get }
+    var item: PublishRelay<[SectionModel]> { get }
     var searchList: PublishRelay<[Search]> { get }
+    var title: PublishRelay<String> { get }
     var isLoading: PublishRelay<Bool> { get }
     var isEmpty: PublishRelay<Bool> { get }
+    var isShowResult: PublishRelay<Bool> { get }
     
-    func getSearchHistory()
+    func fetchData()
     func saveKeyword(keyword: String)
+    func getSearchHistory() -> [SearchHistory]
     func deleteKeyword(keyword: String)
 }
 
@@ -46,10 +90,12 @@ final class SearchViewModel: SearchViewModelProtocol {
     let cancelButtonClicked = PublishSubject<ControlEvent<Void>.Element>()
     
     // MARK: - Output
-    let historyList = PublishRelay<[SearchHistory]>()
+    let item = PublishRelay<[SectionModel]>()
     let searchList = PublishRelay<[Search]>()
+    let title = PublishRelay<String>()
     let isLoading = PublishRelay<Bool>()
     let isEmpty = PublishRelay<Bool>()
+    let isShowResult = PublishRelay<Bool>()
     
     init(realm: RealmDAO<SearchHistory>, service: APIProtocol) {
         self.realm = realm
@@ -59,14 +105,17 @@ final class SearchViewModel: SearchViewModelProtocol {
     }
 }
 
+// MARK: - Fetch
+extension SearchViewModel {
+    func fetchData() {
+        let searchHistory = self.getSearchHistory()
+        item.accept([.history(items: searchHistory.map { .history($0.id) })])
+    }
+}
+
+
 // MARK: - Realm
 extension SearchViewModel {
-    func getSearchHistory() {
-        let historyInfo = realm.read().sorted(by: >)
-        
-        historyList.accept(historyInfo)
-    }
-    
     func saveKeyword(keyword: String) {
         realm.write(
             value: SearchHistory(id: keyword, date: Date()),
@@ -74,29 +123,61 @@ extension SearchViewModel {
         )
     }
     
+    func getSearchHistory() -> [SearchHistory] {
+        let searchHistory = realm.read().sorted(by: >)
+        return searchHistory
+    }
+    
     func deleteKeyword(keyword: String) {
         realm.delete(key: keyword)
         
-        getSearchHistory()
+        let searchHistory = self.getSearchHistory()
+        item.accept([.history(items: searchHistory.map { .history($0.id) })])
     }
 }
 
-// MARK: - Networking
+// MARK: - Search Bar
 extension SearchViewModel {
     func bind() {
+        text
+            .subscribe(onNext: { text in
+                if text.isEmpty {
+                    let searchHistory = self.getSearchHistory()
+                    self.item.accept([.history(items: searchHistory.map { .history($0.id) })])
+                } else {
+                    let searchHistory = self.getSearchHistory().filter({ $0.id.contains(text) })
+                    self.item.accept([.typing(items: searchHistory.map { .typing($0.id) })])
+                }
+            })
+            .disposed(by: disposeBag)
+        
         searchButtonClicked
+            .delay(.seconds(2), scheduler: MainScheduler.asyncInstance)
             .withLatestFrom(text)
             .subscribe(onNext: { text in
                 self.isLoading.accept(true)
+                self.saveKeyword(keyword: text)
                 
                 Task {
                     let response = try await self.service.requestRequest(keyword: text).fetch()
                     
-                    guard let results = response.results else { return }
-                    self.searchList.accept(results)
-                    self.isEmpty.accept(results.isEmpty)
-                    self.isLoading.accept(false)
+                    if let results = response.results {
+                        self.searchList.accept(results)
+                        self.title.accept(text)
+                        self.isEmpty.accept(results.isEmpty)
+                        self.isLoading.accept(false)
+                        self.isShowResult.accept(!results.isEmpty)
+                    } else {
+                        
+                    }
                 }
+            })
+            .disposed(by: disposeBag)
+        
+        cancelButtonClicked
+            .subscribe(onNext: {
+                self.title.accept("")
+                self.isShowResult.accept(false)
             })
             .disposed(by: disposeBag)
     }

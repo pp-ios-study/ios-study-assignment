@@ -7,23 +7,16 @@
 
 import UIKit
 
-import RxSwift
 import RxCocoa
+import RxDataSources
+import RxSwift
 import SnapKit
 
 class SearchViewController: UIViewController {
     
-    //MARK: - Enum
-    enum InputState {
-        case history
-        case typing
-    }
-    
     // MARK: - UI
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.delegate = self
-        tableView.dataSource = self
         tableView.registerCell(SearchMatchItemCell.self)
         tableView.registerCell(SearchHistoryCell.self)
         return tableView
@@ -32,8 +25,6 @@ class SearchViewController: UIViewController {
     private var searchListViewController: SearchListViewController!
     
     // MARK: - Properties
-    private var inputText: String = ""
-    private var inputState: InputState = .history
     private var originalSearchHistoryList: [String] = []
     private var searchHistoryList: [String] = [] {
         didSet {
@@ -59,22 +50,22 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bind()
-        
         setNavigation()
         setUI()
+        setTableViewItem()
         setTapGesture()
+        
+        bind()
         
         requestSearchHistory()
     }
     
     // MARK: - Set Navigation
     private func setNavigation() {
-        searchListViewController = SearchListViewController()
+        searchListViewController = SearchListViewController(viewModel: viewModel)
         
         searchController = UISearchController(searchResultsController: searchListViewController)
         searchController.searchBar.placeholder = "게임, 앱, 스토리 등"
-        searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = searchListViewController
         searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         searchController.showsSearchResultsController = false
@@ -99,7 +90,7 @@ class SearchViewController: UIViewController {
     }
     
     // MARK: - Set Gesture
-    func setTapGesture() {
+    private func setTapGesture() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboardTouchOutside))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
@@ -107,24 +98,23 @@ class SearchViewController: UIViewController {
     
     @objc
     private func dismissKeyboardTouchOutside() {
-        if inputState == .typing {
-            return
-        }
+//        if inputState == .typing {
+//            return
+//        }
         
         searchController.searchBar.resignFirstResponder()
     }
     
     // MARK: - Binding
     private func bind() {
-        viewModel.historyList
-            .subscribe(onNext: { searchHistoryList in
-                self.originalSearchHistoryList = searchHistoryList.map { $0.id }
-                self.searchHistoryList = searchHistoryList.map { $0.id }
-                self.tableView.reloadData()
-            })
+        viewModel.title
+            .bind(to: searchController.searchBar.rx.text)
             .disposed(by: disposeBag)
         
-        guard let searchController = self.navigationItem.searchController else { return }
+        viewModel.isShowResult
+            .bind(to: searchController.rx.showsSearchResultsController)
+            .disposed(by: disposeBag)
+        
         searchController.searchBar.rx.text
             .orEmpty
             .bind(to: viewModel.text)
@@ -139,72 +129,14 @@ class SearchViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    // MARK: - Realm
-    /// 검색어 저장
-    /// - parameter keyword: 검색어
-    private func saveSearchHistory(with keyword: String) {
-        viewModel.saveKeyword(keyword: keyword)
-        
-        requestSearchHistory()
-    }
-    
+    // MARK: - Fetch
     private func requestSearchHistory() {
-        viewModel.getSearchHistory()
-    }
-}
-
-// MARK: - UISearchBarDelegate
-extension SearchViewController: UISearchBarDelegate {
-    
-    /// 검색창을 눌렀을 때
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.becomeFirstResponder()
-    }
-    
-    /// 키보드에서 search 버튼을 눌렀을 때
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        
-        inputText = searchBar.text ?? ""
-        
-        if !inputText.isEmpty {
-            saveSearchHistory(with: inputText)
-            
-            searchController.showsSearchResultsController = true
-        }
-    }
-    
-    /// 검색창의 취소 버튼을 눌렀을 때
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchController.showsSearchResultsController = false
-        
-        searchBar.resignFirstResponder()
-        searchBar.text = ""
-    }
-    
-    /// 검색창에서 텍스트 입력을 시작 했을 때
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        return true
-    }
-    
-    /// 검색창에서 텍스트 입력이 끝났을 때
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        inputState = .history
-        searchHistoryList = originalSearchHistoryList
-        
-        return true
-    }
-    
-    /// 검색창에서 텍스트를 입려중일 때
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchController.showsSearchResultsController = false
-        
-        inputState = .typing
-        searchHistoryList = originalSearchHistoryList.filter({ $0.contains(searchText) })
+        viewModel.fetchData()
     }
 }
 
 // MARK: - UITableView
+/*
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch inputState {
@@ -222,39 +154,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         header.textLabel?.textAlignment = .left
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchHistoryList.count
-    }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch inputState {
         case .history:
             return 40
         default:
             return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch inputState {
-        case .history:
-            guard let cell = tableView.dequeueCell(
-                SearchHistoryCell.self,
-                for: indexPath
-            ) else {
-                return UITableViewCell()
-            }
-            cell.configureCell(text: searchHistoryList[indexPath.row])
-            return cell
-        case .typing:
-            guard let cell = tableView.dequeueCell(
-                SearchMatchItemCell.self,
-                for: indexPath
-            ) else {
-                return UITableViewCell()
-            }
-//            cell.configureCell(keyword: searchHistoryList[indexPath.row])
-            return cell
         }
     }
     
@@ -265,5 +170,43 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         searchController.searchBar.resignFirstResponder()
         searchController.showsSearchResultsController = true
         searchController.isActive = true
+    }
+}
+ */
+
+// MARK: - Set Table View
+extension SearchViewController {
+    private func setTableViewItem() {
+        typealias DataSource = RxTableViewSectionedReloadDataSource<SectionModel>
+        let dataSource = DataSource { dataSource, tableView, indexPath, item in
+            switch item {
+            case .history(let text):
+                guard let cell = tableView.dequeueCell(
+                    SearchHistoryCell.self,
+                    for: indexPath
+                ) else {
+                    return UITableViewCell()
+                }
+                cell.configureCell(text: text)
+                return cell
+            case .typing(let text):
+                guard let cell = tableView.dequeueCell(
+                    SearchMatchItemCell.self,
+                    for: indexPath
+                ) else {
+                    return UITableViewCell()
+                }
+                cell.configureCell(text: text)
+                return cell
+            }
+        }
+        
+        dataSource.titleForHeaderInSection = { dataSource, index in
+            return dataSource.sectionModels[index].headerTitle
+        }
+        
+        viewModel.item
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
 }

@@ -56,6 +56,7 @@ extension SearchMatchItemCell {
         }
     }
     
-    func configureCell() {
+    func configureCell(text: String) {
+        searchHistoryTextLabel.text = text
     }
 }
