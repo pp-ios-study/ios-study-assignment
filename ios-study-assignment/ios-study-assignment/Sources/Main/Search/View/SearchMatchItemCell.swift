@@ -41,6 +41,8 @@ class SearchMatchItemCell: UITableViewCell {
 // MARK: - Set UI
 extension SearchMatchItemCell {
     private func setUI() {
+        self.selectionStyle = .none
+        
         self.contentView.addSubview(cellImageView)
         cellImageView.snp.makeConstraints {
             $0.width.height.equalTo(20)

@@ -60,6 +60,7 @@ protocol SearchViewModelInput {
     var text: PublishSubject<String> { get }
     var searchButtonClicked: PublishSubject<ControlEvent<Void>.Element> { get }
     var cancelButtonClicked: PublishSubject<ControlEvent<Void>.Element> { get }
+    var tableCellSelected: PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<SectionModel.SearchItem>.Element)> { get }
 }
 
 protocol SearchViewModelOutput {
@@ -70,7 +71,7 @@ protocol SearchViewModelOutput {
     var isEmpty: PublishRelay<Bool> { get }
     var isShowResult: PublishRelay<Bool> { get }
     
-    func fetchData()
+    func fetchDataBase()
     func saveKeyword(keyword: String)
     func getSearchHistory() -> [SearchHistory]
     func deleteKeyword(keyword: String)
@@ -88,6 +89,7 @@ final class SearchViewModel: SearchViewModelProtocol {
     let text = PublishSubject<String>()
     let searchButtonClicked = PublishSubject<ControlEvent<Void>.Element>()
     let cancelButtonClicked = PublishSubject<ControlEvent<Void>.Element>()
+    let tableCellSelected = PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<SectionModel.SearchItem>.Element)>()
     
     // MARK: - Output
     let item = PublishRelay<[SectionModel]>()
@@ -107,9 +109,29 @@ final class SearchViewModel: SearchViewModelProtocol {
 
 // MARK: - Fetch
 extension SearchViewModel {
-    func fetchData() {
+    func fetchDataBase() {
         let searchHistory = self.getSearchHistory()
         item.accept([.history(items: searchHistory.map { .history($0.id) })])
+    }
+    
+    func fetchSearch(keyword: String) {
+        Task {
+            let response = try await self.service.requestRequest(keyword: keyword).fetch()
+            
+            if let results = response.results {
+                self.searchList.accept(results)
+                self.title.accept(keyword)
+                self.isEmpty.accept(results.isEmpty)
+                self.isLoading.accept(false)
+                self.isShowResult.accept(!results.isEmpty)
+            } else {
+                self.searchList.accept([])
+                self.title.accept(keyword)
+                self.isEmpty.accept(true)
+                self.isLoading.accept(false)
+                self.isShowResult.accept(true)
+            }
+        }
     }
 }
 
@@ -157,20 +179,7 @@ extension SearchViewModel {
             .subscribe(onNext: { text in
                 self.isLoading.accept(true)
                 self.saveKeyword(keyword: text)
-                
-                Task {
-                    let response = try await self.service.requestRequest(keyword: text).fetch()
-                    
-                    if let results = response.results {
-                        self.searchList.accept(results)
-                        self.title.accept(text)
-                        self.isEmpty.accept(results.isEmpty)
-                        self.isLoading.accept(false)
-                        self.isShowResult.accept(!results.isEmpty)
-                    } else {
-                        
-                    }
-                }
+                self.fetchSearch(keyword: text)
             })
             .disposed(by: disposeBag)
         
@@ -178,6 +187,21 @@ extension SearchViewModel {
             .subscribe(onNext: {
                 self.title.accept("")
                 self.isShowResult.accept(false)
+            })
+            .disposed(by: disposeBag)
+        
+        tableCellSelected
+            .subscribe(onNext: { (indexPath, section) in
+                switch section {
+                case .history(let text):
+                    self.title.accept(text)
+                    self.fetchSearch(keyword: text)
+                case .typing(let text):
+                    self.title.accept(text)
+                    self.fetchSearch(keyword: text)
+                }
+                
+                self.isShowResult.accept(true)
             })
             .disposed(by: disposeBag)
     }

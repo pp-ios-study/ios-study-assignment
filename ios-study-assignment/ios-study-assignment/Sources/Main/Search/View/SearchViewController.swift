@@ -115,6 +115,10 @@ class SearchViewController: UIViewController {
             .bind(to: searchController.rx.showsSearchResultsController)
             .disposed(by: disposeBag)
         
+        viewModel.isShowResult
+            .bind(to: searchController.rx.isActive)
+            .disposed(by: disposeBag)
+        
         searchController.searchBar.rx.text
             .orEmpty
             .bind(to: viewModel.text)
@@ -127,52 +131,20 @@ class SearchViewController: UIViewController {
         searchController.searchBar.rx.cancelButtonClicked
             .bind(to: viewModel.cancelButtonClicked)
             .disposed(by: disposeBag)
+        
+        Observable.zip(
+            tableView.rx.itemSelected,
+            tableView.rx.modelSelected(SectionModel.SearchItem.self)
+        )
+        .bind(to: viewModel.tableCellSelected)
+        .disposed(by: disposeBag)
     }
     
     // MARK: - Fetch
     private func requestSearchHistory() {
-        viewModel.fetchData()
+        viewModel.fetchDataBase()
     }
 }
-
-// MARK: - UITableView
-/*
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch inputState {
-        case .history:
-            return "최근 검색어"
-        default:
-            return nil
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let header = view as? UITableViewHeaderFooterView else { return }
-        header.textLabel?.textColor = UIColor.black
-        header.textLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 18)
-        header.textLabel?.textAlignment = .left
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch inputState {
-        case .history:
-            return 40
-        default:
-            return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        searchController.searchBar.text = searchHistoryList[indexPath.row]
-        searchController.searchBar.resignFirstResponder()
-        searchController.showsSearchResultsController = true
-        searchController.isActive = true
-    }
-}
- */
 
 // MARK: - Set Table View
 extension SearchViewController {

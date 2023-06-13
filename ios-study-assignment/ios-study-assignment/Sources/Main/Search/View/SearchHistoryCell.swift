@@ -40,6 +40,8 @@ final class SearchHistoryCell: UITableViewCell {
 // MARK: - Set UI
 extension SearchHistoryCell {
     private func setUI() {
+        self.selectionStyle = .none
+        
         self.contentView.addSubview(searchHistoryTextLabel)
         searchHistoryTextLabel.snp.makeConstraints {
             $0.height.equalTo(20)
