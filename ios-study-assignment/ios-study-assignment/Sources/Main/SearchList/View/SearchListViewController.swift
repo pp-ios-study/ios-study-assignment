@@ -17,7 +17,7 @@ final class SearchListViewController: UIViewController {
     // MARK: - UI
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.generateLayout())
-        collectionView.isScrollEnabled = false
+        collectionView.isScrollEnabled = true
         collectionView.registerCell(SearchListCell.self)
         return collectionView
     }()
@@ -100,13 +100,13 @@ extension SearchListViewController {
     private func generateSearchItemLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(342)
+            heightDimension: .absolute(342)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(342)
+            heightDimension: .absolute(342)
         )
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
@@ -114,9 +114,7 @@ extension SearchListViewController {
         )
         
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
         section.interGroupSpacing = 10
-        section.orthogonalScrollingBehavior = .continuous
         
         return section
     }
@@ -125,6 +123,5 @@ extension SearchListViewController {
 // MARK: - UISearchResultsUpdating
 extension SearchListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let _ = searchController.searchBar.text else { return }
     }
 }
