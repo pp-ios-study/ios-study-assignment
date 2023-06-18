@@ -117,6 +117,7 @@ extension SearchViewModel {
     func fetchSearch(keyword: String) {
         Task {
             let response = try await self.service.requestRequest(keyword: keyword).fetch()
+            self.isLoading.accept(true)
             
             if let results = response.results {
                 self.searchList.accept(results)
@@ -177,9 +178,10 @@ extension SearchViewModel {
             .delay(.seconds(2), scheduler: MainScheduler.asyncInstance)
             .withLatestFrom(text)
             .subscribe(onNext: { text in
-                self.isLoading.accept(true)
-                self.saveKeyword(keyword: text)
-                self.fetchSearch(keyword: text)
+                if !text.isEmpty {
+                    self.saveKeyword(keyword: text)
+                    self.fetchSearch(keyword: text)
+                }
             })
             .disposed(by: disposeBag)
         
