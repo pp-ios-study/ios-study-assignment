@@ -1,5 +1,5 @@
 //
-//  SearchReleaseNoteCell.swift
+//  SearchDetailReleaseNoteCell.swift
 //  ios-study-assignment
 //
 //  Created by 최승명 on 2023/06/19.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SearchReleaseNoteCell: UITableViewCell {
+final class SearchDetailReleaseNoteCell: UITableViewCell {
     
     // MARK: - UI
     private lazy var headerLabel: UILabel = {
@@ -63,7 +63,7 @@ final class SearchReleaseNoteCell: UITableViewCell {
 }
 
 // MARK: - Set UI
-extension SearchReleaseNoteCell {
+extension SearchDetailReleaseNoteCell {
     private func setUI() {
         self.selectionStyle = .none
         

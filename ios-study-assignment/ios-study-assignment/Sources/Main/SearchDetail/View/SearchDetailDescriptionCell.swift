@@ -1,5 +1,5 @@
 //
-//  SearchDescriptionCell.swift
+//  SearchDetailDescriptionCell.swift
 //  ios-study-assignment
 //
 //  Created by 최승명 on 2023/06/19.
@@ -11,7 +11,7 @@ protocol TextViewUpdate: AnyObject {
     func updateTextView()
 }
 
-final class SearchDescriptionCell: UITableViewCell {
+final class SearchDetailDescriptionCell: UITableViewCell {
     
     // MARK: - UI
     private lazy var appDescriptionTextView: UITextView = {
@@ -60,7 +60,7 @@ final class SearchDescriptionCell: UITableViewCell {
 }
 
 // MARK: - Set UI
-extension SearchDescriptionCell {
+extension SearchDetailDescriptionCell {
     private func setUI() {
         self.selectionStyle = .none
         

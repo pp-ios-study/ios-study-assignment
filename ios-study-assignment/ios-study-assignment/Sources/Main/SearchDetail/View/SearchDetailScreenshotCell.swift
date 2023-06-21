@@ -1,5 +1,5 @@
 //
-//  SearchScreenshotCell.swift
+//  SearchDetailScreenshotCell.swift
 //  ios-study-assignment
 //
 //  Created by 최승명 on 2023/06/19.
@@ -9,7 +9,7 @@ import UIKit
 
 import Kingfisher
 
-final class SearchScreenshotCell: UITableViewCell {
+final class SearchDetailScreenshotCell: UITableViewCell {
     
     // MARK: - UI
     private lazy var headerLabel: UILabel = {
@@ -102,7 +102,7 @@ final class SearchScreenshotCell: UITableViewCell {
 }
 
 // MARK: - UICollectionView
-extension SearchScreenshotCell: UICollectionViewDelegate, UICollectionViewDataSource {
+extension SearchDetailScreenshotCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         screenshotUrlList.count
     }
@@ -119,7 +119,7 @@ extension SearchScreenshotCell: UICollectionViewDelegate, UICollectionViewDataSo
     }
 }
 
-extension SearchScreenshotCell: UICollectionViewDelegateFlowLayout {
+extension SearchDetailScreenshotCell: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,

@@ -1,5 +1,5 @@
 //
-//  SearchSummaryCell.swift
+//  SearchDetailSummaryCell.swift
 //  ios-study-assignment
 //
 //  Created by 최승명 on 2023/06/19.
@@ -10,7 +10,7 @@ import UIKit
 import Common
 import Domain
 
-final class SearchSummaryCell: UITableViewCell {
+final class SearchDetailSummaryCell: UITableViewCell {
     
     // MARK: - Enum
     enum NumberState {
@@ -139,7 +139,7 @@ final class SearchSummaryCell: UITableViewCell {
 }
 
 // MARK: - Set UI
-extension SearchSummaryCell {
+extension SearchDetailSummaryCell {
     private func setUI() {
         self.selectionStyle = .none
         

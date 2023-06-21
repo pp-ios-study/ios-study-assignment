@@ -107,18 +107,7 @@ class SearchViewController: UIViewController {
     
     // MARK: - Binding
     private func bind() {
-        viewModel.title
-            .bind(to: searchController.searchBar.rx.text)
-            .disposed(by: disposeBag)
-        
-        viewModel.isShowResult
-            .bind(to: searchController.rx.showsSearchResultsController)
-            .disposed(by: disposeBag)
-        
-        viewModel.isShowResult
-            .bind(to: searchController.rx.isActive)
-            .disposed(by: disposeBag)
-        
+        // input
         searchController.searchBar.rx.text
             .orEmpty
             .bind(to: viewModel.text)
@@ -136,8 +125,21 @@ class SearchViewController: UIViewController {
             tableView.rx.itemSelected,
             tableView.rx.modelSelected(SectionModel.SearchItem.self)
         )
-        .bind(to: viewModel.tableCellSelected)
+        .bind(to: viewModel.historyCellDidTap)
         .disposed(by: disposeBag)
+        
+        // output
+        viewModel.title
+            .bind(to: searchController.searchBar.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.isShowResult
+            .bind(to: searchController.rx.showsSearchResultsController)
+            .disposed(by: disposeBag)
+        
+        viewModel.isShowResult
+            .bind(to: searchController.rx.isActive)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Fetch

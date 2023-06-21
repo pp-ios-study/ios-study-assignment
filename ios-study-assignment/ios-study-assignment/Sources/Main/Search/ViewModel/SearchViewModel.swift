@@ -60,7 +60,8 @@ protocol SearchViewModelInput {
     var text: PublishSubject<String> { get }
     var searchButtonClicked: PublishSubject<ControlEvent<Void>.Element> { get }
     var cancelButtonClicked: PublishSubject<ControlEvent<Void>.Element> { get }
-    var tableCellSelected: PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<SectionModel.SearchItem>.Element)> { get }
+    var historyCellDidTap: PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<SectionModel.SearchItem>.Element)> { get }
+    var searchItemCellDidTap: PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<Search>.Element)> { get }
 }
 
 protocol SearchViewModelOutput {
@@ -89,7 +90,8 @@ final class SearchViewModel: SearchViewModelProtocol {
     let text = PublishSubject<String>()
     let searchButtonClicked = PublishSubject<ControlEvent<Void>.Element>()
     let cancelButtonClicked = PublishSubject<ControlEvent<Void>.Element>()
-    let tableCellSelected = PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<SectionModel.SearchItem>.Element)>()
+    let historyCellDidTap = PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<SectionModel.SearchItem>.Element)>()
+    let searchItemCellDidTap = PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<Search>.Element)>()
     
     // MARK: - Output
     let item = PublishRelay<[SectionModel]>()
@@ -192,7 +194,7 @@ extension SearchViewModel {
             })
             .disposed(by: disposeBag)
         
-        tableCellSelected
+        historyCellDidTap
             .subscribe(onNext: { (indexPath, section) in
                 switch section {
                 case .history(let text):

@@ -65,6 +65,15 @@ final class SearchListViewController: UIViewController {
     
     // MARK: - Binding
     private func bind() {
+        // input
+        Observable.zip(
+            collectionView.rx.itemSelected,
+            collectionView.rx.modelSelected(Search.self)
+        )
+        .bind(to: viewModel.searchItemCellDidTap)
+        .disposed(by: disposeBag)
+        
+        // output
         viewModel.searchList
             .bind(to: collectionView.rx.items(
                 cellIdentifier: SearchListCell.reuseIdentifier,

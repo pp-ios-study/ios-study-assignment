@@ -8,6 +8,7 @@
 import UIKit
 
 import Common
+import Domain
 import RxSwift
 import RxCocoa
 
@@ -25,5 +26,20 @@ class SearchCoordinator: BaseCoordinator {
 
         navigationController.isNavigationBarHidden = false
         navigationController.viewControllers = [viewController]
+        
+        bind()
+    }
+}
+
+extension SearchCoordinator {
+    private func bind() {
+        viewModel.searchItemCellDidTap
+            .subscribe(onNext: { [weak self] indexPath, item in self?.showSearchDetail(appInfo: item) })
+            .disposed(by: disposeBag)
+    }
+    
+    private func showSearchDetail(appInfo: Search) {
+        let viewController = SearchDetailViewController(appInfo: appInfo)
+        navigationController.pushViewController(viewController, animated: true)
     }
 }

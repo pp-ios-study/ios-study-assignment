@@ -15,10 +15,12 @@ final class SearchDetailViewController: UIViewController {
     private lazy var tableView: UITableView = UITableView()
     
     // MARK: - Properties
-    private var appInfo: Search?
+    private let appInfo: Search
     
     // MARK: - Init
-    init() {
+    init(appInfo: Search) {
+        self.appInfo = appInfo
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -62,10 +64,10 @@ final class SearchDetailViewController: UIViewController {
         tableView.separatorStyle = .singleLine
         
         tableView.registerCell(SearchDetailTitleCell.self)
-        tableView.registerCell(SearchSummaryCell.self)
-        tableView.registerCell(SearchReleaseNoteCell.self)
-        tableView.registerCell(SearchScreenshotCell.self)
-        tableView.registerCell(SearchDescriptionCell.self)
+        tableView.registerCell(SearchDetailSummaryCell.self)
+        tableView.registerCell(SearchDetailReleaseNoteCell.self)
+        tableView.registerCell(SearchDetailScreenshotCell.self)
+        tableView.registerCell(SearchDetailDescriptionCell.self)
     }
 }
 
@@ -76,8 +78,6 @@ extension SearchDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let appInfo = appInfo else { return UITableViewCell() }
-        
         switch indexPath.row {
         case 0:
             guard let cell = tableView.dequeueCell(
@@ -90,7 +90,7 @@ extension SearchDetailViewController: UITableViewDelegate, UITableViewDataSource
             return cell
         case 1:
             guard let cell = tableView.dequeueCell(
-                SearchSummaryCell.self,
+                SearchDetailSummaryCell.self,
                 for: indexPath
             ) else {
                 return UITableViewCell()
@@ -100,7 +100,7 @@ extension SearchDetailViewController: UITableViewDelegate, UITableViewDataSource
         case 2:
             if let releaseNotes = appInfo.releaseNotes {
                 guard let cell = tableView.dequeueCell(
-                    SearchReleaseNoteCell.self,
+                    SearchDetailReleaseNoteCell.self,
                     for: indexPath
                 ) else {
                     return UITableViewCell()
@@ -113,7 +113,7 @@ extension SearchDetailViewController: UITableViewDelegate, UITableViewDataSource
             }
         case 3:
             guard let cell = tableView.dequeueCell(
-                SearchScreenshotCell.self,
+                SearchDetailScreenshotCell.self,
                 for: indexPath
             ) else {
                 return UITableViewCell()
@@ -123,7 +123,7 @@ extension SearchDetailViewController: UITableViewDelegate, UITableViewDataSource
         case 4:
             if let description = appInfo.description {
                 guard let cell = tableView.dequeueCell(
-                    SearchDescriptionCell.self,
+                    SearchDetailDescriptionCell.self,
                     for: indexPath
                 ) else {
                     return UITableViewCell()
