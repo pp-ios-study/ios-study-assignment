@@ -131,6 +131,5 @@ extension SearchListViewController {
 
 // MARK: - UISearchResultsUpdating
 extension SearchListViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-    }
+    func updateSearchResults(for searchController: UISearchController) { }
 }

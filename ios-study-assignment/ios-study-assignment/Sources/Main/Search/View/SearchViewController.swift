@@ -25,13 +25,6 @@ class SearchViewController: UIViewController {
     private var searchListViewController: SearchListViewController!
     
     // MARK: - Properties
-    private var originalSearchHistoryList: [String] = []
-    private var searchHistoryList: [String] = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-    
     private let viewModel: SearchViewModelProtocol
     private let disposeBag: DisposeBag = DisposeBag()
     
@@ -56,11 +49,11 @@ class SearchViewController: UIViewController {
         setTapGesture()
         
         bind()
-        
-        requestSearchHistory()
     }
-    
-    // MARK: - Set Navigation
+}
+
+// MARK: Set UI
+extension SearchViewController {
     private func setNavigation() {
         searchListViewController = SearchListViewController(viewModel: viewModel)
         
@@ -79,7 +72,6 @@ class SearchViewController: UIViewController {
         self.navigationController?.navigationBar.sizeToFit()
     }
     
-    // MARK: Set UI
     private func setUI() {
         self.view.backgroundColor = .white
         
@@ -88,8 +80,10 @@ class SearchViewController: UIViewController {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
     }
-    
-    // MARK: - Set Gesture
+}
+
+// MARK: - Set Gesture
+extension SearchViewController {
     private func setTapGesture() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboardTouchOutside))
         tap.cancelsTouchesInView = false
@@ -98,53 +92,7 @@ class SearchViewController: UIViewController {
     
     @objc
     private func dismissKeyboardTouchOutside() {
-//        if inputState == .typing {
-//            return
-//        }
-        
         searchController.searchBar.resignFirstResponder()
-    }
-    
-    // MARK: - Binding
-    private func bind() {
-        // input
-        searchController.searchBar.rx.text
-            .orEmpty
-            .bind(to: viewModel.text)
-            .disposed(by: disposeBag)
-        
-        searchController.searchBar.rx.searchButtonClicked
-            .bind(to: viewModel.searchButtonClicked)
-            .disposed(by: disposeBag)
-        
-        searchController.searchBar.rx.cancelButtonClicked
-            .bind(to: viewModel.cancelButtonClicked)
-            .disposed(by: disposeBag)
-        
-        Observable.zip(
-            tableView.rx.itemSelected,
-            tableView.rx.modelSelected(SectionModel.SearchItem.self)
-        )
-        .bind(to: viewModel.historyCellDidTap)
-        .disposed(by: disposeBag)
-        
-        // output
-        viewModel.title
-            .bind(to: searchController.searchBar.rx.text)
-            .disposed(by: disposeBag)
-        
-        viewModel.isShowResult
-            .bind(to: searchController.rx.showsSearchResultsController)
-            .disposed(by: disposeBag)
-        
-        viewModel.isShowResult
-            .bind(to: searchController.rx.isActive)
-            .disposed(by: disposeBag)
-    }
-    
-    // MARK: - Fetch
-    private func requestSearchHistory() {
-        viewModel.fetchDataBase()
     }
 }
 
@@ -181,6 +129,49 @@ extension SearchViewController {
         
         viewModel.item
             .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - Binding
+extension SearchViewController {
+    private func bind() {
+        // input
+        self.rx.viewWillAppear
+            .bind(to: viewModel.viewWillAppear)
+            .disposed(by: disposeBag)
+        
+        searchController.searchBar.rx.text
+            .orEmpty
+            .bind(to: viewModel.text)
+            .disposed(by: disposeBag)
+        
+        searchController.searchBar.rx.searchButtonClicked
+            .bind(to: viewModel.searchButtonClicked)
+            .disposed(by: disposeBag)
+        
+        searchController.searchBar.rx.cancelButtonClicked
+            .bind(to: viewModel.cancelButtonClicked)
+            .disposed(by: disposeBag)
+        
+        Observable.zip(
+            tableView.rx.itemSelected,
+            tableView.rx.modelSelected(SectionModel.SearchItem.self)
+        )
+        .bind(to: viewModel.historyCellDidTap)
+        .disposed(by: disposeBag)
+        
+        // output
+        viewModel.title
+            .bind(to: searchController.searchBar.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.isShowResult
+            .bind(to: searchController.rx.showsSearchResultsController)
+            .disposed(by: disposeBag)
+        
+        viewModel.isShowResult
+            .bind(to: searchController.rx.isActive)
             .disposed(by: disposeBag)
     }
 }

@@ -88,8 +88,10 @@ final class SearchListCell: UICollectionViewCell {
         super.layoutSubviews()
         setLayer()
     }
-    
-    // MARK: - Set UI
+}
+
+// MARK: - Set UI
+extension SearchListCell {
     private func setUI() {
         self.contentView.addSubview(appLogoImage)
         appLogoImage.snp.makeConstraints {

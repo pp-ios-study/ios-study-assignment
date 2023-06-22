@@ -58,10 +58,13 @@ protocol SearchViewModelInput {
     var service: APIProtocol { get }
     var realm: RealmDAO<SearchHistory> { get }
     var text: PublishSubject<String> { get }
+    
     var searchButtonClicked: PublishSubject<ControlEvent<Void>.Element> { get }
     var cancelButtonClicked: PublishSubject<ControlEvent<Void>.Element> { get }
     var historyCellDidTap: PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<SectionModel.SearchItem>.Element)> { get }
     var searchItemCellDidTap: PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<Search>.Element)> { get }
+    
+    var viewWillAppear: PublishSubject<Bool> { get }
 }
 
 protocol SearchViewModelOutput {
@@ -84,14 +87,16 @@ final class SearchViewModel: SearchViewModelProtocol {
     
     // MARK: - Input
     let disposeBag: DisposeBag = DisposeBag()
-    let realm: RealmDAO<SearchHistory>
     let service: APIProtocol
-    
+    let realm: RealmDAO<SearchHistory>
     let text = PublishSubject<String>()
+    
     let searchButtonClicked = PublishSubject<ControlEvent<Void>.Element>()
     let cancelButtonClicked = PublishSubject<ControlEvent<Void>.Element>()
     let historyCellDidTap = PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<SectionModel.SearchItem>.Element)>()
     let searchItemCellDidTap = PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<Search>.Element)>()
+    
+    let viewWillAppear = PublishSubject<Bool>()
     
     // MARK: - Output
     let item = PublishRelay<[SectionModel]>()
@@ -206,6 +211,12 @@ extension SearchViewModel {
                 }
                 
                 self.isShowResult.accept(true)
+            })
+            .disposed(by: disposeBag)
+        
+        viewWillAppear
+            .subscribe(onNext: { isAppear in
+                self.fetchDataBase()
             })
             .disposed(by: disposeBag)
     }
