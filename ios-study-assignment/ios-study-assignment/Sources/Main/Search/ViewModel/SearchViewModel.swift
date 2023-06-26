@@ -168,7 +168,7 @@ extension SearchViewModel {
     }
 }
 
-// MARK: - Search Bar
+// MARK: - Binding
 extension SearchViewModel {
     func bind() {
         text
@@ -223,7 +223,7 @@ extension SearchViewModel {
             .disposed(by: disposeBag)
         
         viewWillAppear
-            .subscribe(onNext: { isAppear in
+            .subscribe(onNext: { _ in
                 self.fetchDataBase()
             })
             .disposed(by: disposeBag)

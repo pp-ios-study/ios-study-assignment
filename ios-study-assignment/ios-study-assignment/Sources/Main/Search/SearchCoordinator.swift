@@ -11,6 +11,8 @@ import Common
 import Domain
 import RxSwift
 import RxCocoa
+import Swinject
+import SwinjectAutoregistration
 
 class SearchCoordinator: BaseCoordinator {
 
@@ -39,7 +41,9 @@ extension SearchCoordinator {
     }
     
     private func showSearchDetail(appInfo: Search) {
-        let viewController = SearchDetailViewController(appInfo: appInfo)
+        let viewController = SearchDetailViewController(
+            viewModel: SearchDetailViewModel(appInfo: appInfo) as SearchDetailViewModelProtocol
+        )
         navigationController.pushViewController(viewController, animated: true)
     }
 }

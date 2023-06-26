@@ -20,6 +20,7 @@
 		0278C2C22A2F145A009CA7CC /* LaunchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0278C2C12A2F145A009CA7CC /* LaunchViewController.storyboard */; };
 		0278C2C82A2F1585009CA7CC /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278C2C72A2F1585009CA7CC /* SearchViewModel.swift */; };
 		0278C2D32A2F1B74009CA7CC /* AppModules in Frameworks */ = {isa = PBXBuildFile; productRef = 0278C2D22A2F1B74009CA7CC /* AppModules */; };
+		0279EFE52A49D996000B69FD /* SearchDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0279EFE42A49D996000B69FD /* SearchDetailViewModel.swift */; };
 		02ADABA52A35FCD800E9C408 /* SearchListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ADABA42A35FCD800E9C408 /* SearchListCell.swift */; };
 		02DD105F2A20F3E100DCFC0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD105E2A20F3E100DCFC0D /* AppDelegate.swift */; };
 		02DD10612A20F3E100DCFC0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DD10602A20F3E100DCFC0D /* SceneDelegate.swift */; };
@@ -73,6 +74,7 @@
 		0278C2C12A2F145A009CA7CC /* LaunchViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchViewController.storyboard; sourceTree = "<group>"; };
 		0278C2C72A2F1585009CA7CC /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		0278C2D12A2F1923009CA7CC /* AppModules */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AppModules; sourceTree = "<group>"; };
+		0279EFE42A49D996000B69FD /* SearchDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailViewModel.swift; sourceTree = "<group>"; };
 		02ADABA42A35FCD800E9C408 /* SearchListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListCell.swift; sourceTree = "<group>"; };
 		02DD105B2A20F3E100DCFC0D /* ios-study-assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-study-assignment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02DD105E2A20F3E100DCFC0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 		02615C412A40A3E10039E379 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				0279EFE42A49D996000B69FD /* SearchDetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				0278C2C82A2F1585009CA7CC /* SearchViewModel.swift in Sources */,
 				02615C332A409E990039E379 /* SearchDetailTitleCell.swift in Sources */,
 				02DD10B52A21025400DCFC0D /* LaunchViewController.swift in Sources */,
+				0279EFE52A49D996000B69FD /* SearchDetailViewModel.swift in Sources */,
 				02615C352A409F140039E379 /* SearchDetailScreenshotCell.swift in Sources */,
 				02DD10612A20F3E100DCFC0D /* SceneDelegate.swift in Sources */,
 			);

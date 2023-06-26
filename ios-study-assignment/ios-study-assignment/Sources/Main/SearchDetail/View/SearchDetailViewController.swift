@@ -8,18 +8,32 @@
 import UIKit
 
 import Domain
+import RxCocoa
+import RxDataSources
+import RxSwift
 
 final class SearchDetailViewController: UIViewController {
     
     // MARK: - UI
-    private lazy var tableView: UITableView = UITableView()
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .singleLine
+        tableView.registerCell(SearchDetailTitleCell.self)
+        tableView.registerCell(SearchDetailSummaryCell.self)
+        tableView.registerCell(SearchDetailReleaseNoteCell.self)
+        tableView.registerCell(SearchDetailScreenshotCell.self)
+        tableView.registerCell(SearchDetailDescriptionCell.self)
+        return tableView
+    }()
     
     // MARK: - Properties
-    private let appInfo: Search
+    private let viewModel: SearchDetailViewModelProtocol
+    private let disposeBag: DisposeBag = DisposeBag()
     
     // MARK: - Init
-    init(appInfo: Search) {
-        self.appInfo = appInfo
+    init(viewModel: SearchDetailViewModelProtocol) {
+        self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -33,17 +47,9 @@ final class SearchDetailViewController: UIViewController {
         super.viewDidLoad()
         
         setUI()
-        setTableView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.prefersLargeTitles = false
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        setTableViewItem()
+        
+        bind()
     }
 }
 
@@ -57,88 +63,95 @@ extension SearchDetailViewController {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
     }
-    
-    // MARK: - Set Table View
-    private func setTableView() {
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
-        
-        tableView.registerCell(SearchDetailTitleCell.self)
-        tableView.registerCell(SearchDetailSummaryCell.self)
-        tableView.registerCell(SearchDetailReleaseNoteCell.self)
-        tableView.registerCell(SearchDetailScreenshotCell.self)
-        tableView.registerCell(SearchDetailDescriptionCell.self)
-    }
 }
 
-// MARK: - UITableView
-extension SearchDetailViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
-        case 0:
-            guard let cell = tableView.dequeueCell(
-                SearchDetailTitleCell.self,
-                for: indexPath
-            ) else {
-                return UITableViewCell()
-            }
-            cell.configureCell(appInfo: appInfo)
-            return cell
-        case 1:
-            guard let cell = tableView.dequeueCell(
-                SearchDetailSummaryCell.self,
-                for: indexPath
-            ) else {
-                return UITableViewCell()
-            }
-            cell.configureCell(appInfo: appInfo)
-            return cell
-        case 2:
-            if let releaseNotes = appInfo.releaseNotes {
+// MARK: - Set Table View
+extension SearchDetailViewController {
+    private func setTableViewItem() {
+        typealias DataSource = RxTableViewSectionedReloadDataSource<DetailSectionModel>
+        let dataSource = DataSource { dataSource, tableView, indexPath, item in
+            switch item {
+            case .title(let appInfo):
                 guard let cell = tableView.dequeueCell(
-                    SearchDetailReleaseNoteCell.self,
+                    SearchDetailTitleCell.self,
                     for: indexPath
                 ) else {
                     return UITableViewCell()
                 }
-                cell.delegate = self
-                cell.configureCell(text: releaseNotes)
+                cell.configureCell(appInfo: appInfo)
                 return cell
-            } else {
-                return UITableViewCell()
-            }
-        case 3:
-            guard let cell = tableView.dequeueCell(
-                SearchDetailScreenshotCell.self,
-                for: indexPath
-            ) else {
-                return UITableViewCell()
-            }
-            cell.configureCell(screenshotUrlList: appInfo.screenshotUrls ?? [String]())
-            return cell
-        case 4:
-            if let description = appInfo.description {
+            case .summary(let appInfo):
                 guard let cell = tableView.dequeueCell(
-                    SearchDetailDescriptionCell.self,
+                    SearchDetailSummaryCell.self,
                     for: indexPath
                 ) else {
                     return UITableViewCell()
                 }
-                cell.delegate = self
-                cell.configureCell(text: description)
+                cell.configureCell(appInfo: appInfo)
                 return cell
-            } else {
-                return UITableViewCell()
+            case .releaseNote(let appInfo):
+                if let releaseNotes = appInfo.releaseNotes {
+                    guard let cell = tableView.dequeueCell(
+                        SearchDetailReleaseNoteCell.self,
+                        for: indexPath
+                    ) else {
+                        return UITableViewCell()
+                    }
+                    cell.delegate = self
+                    cell.configureCell(text: releaseNotes)
+                    return cell
+                } else {
+                    return UITableViewCell()
+                }
+            case .screenshot(let appInfo):
+                guard let cell = tableView.dequeueCell(
+                    SearchDetailScreenshotCell.self,
+                    for: indexPath
+                ) else {
+                    return UITableViewCell()
+                }
+                cell.configureCell(screenshotUrlList: appInfo.screenshotUrls ?? [String]())
+                return cell
+            case .description(let appInfo):
+                if let description = appInfo.description {
+                    guard let cell = tableView.dequeueCell(
+                        SearchDetailDescriptionCell.self,
+                        for: indexPath
+                    ) else {
+                        return UITableViewCell()
+                    }
+                    cell.delegate = self
+                    cell.configureCell(text: description)
+                    return cell
+                } else {
+                    return UITableViewCell()
+                }
             }
-        default:
-            return UITableViewCell()
         }
+        
+        viewModel.item
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+    }
+
+}
+
+// MARK: - Binding
+extension SearchDetailViewController {
+    func bind() {
+        // Input
+        self.rx.viewWillAppear
+            .bind(to: viewModel.viewWillAppear)
+            .disposed(by: disposeBag)
+        
+        self.rx.viewWillDisappear
+            .bind(to: viewModel.viewWillDisappear)
+            .disposed(by: disposeBag)
+        
+        // Output
+        viewModel.isLargeTitle
+            .bind(to: self.navigationController!.navigationBar.rx.prefersLargeTitles)
+            .disposed(by: disposeBag)
     }
 }
 
