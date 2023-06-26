@@ -46,8 +46,10 @@ final class SearchListViewController: UIViewController {
         
         setUI()
     }
-    
-    // MARK: - Set UI
+}
+
+// MARK: - Set UI
+extension SearchListViewController {
     private func setUI() {
         self.view.backgroundColor = .white
         
@@ -61,38 +63,6 @@ final class SearchListViewController: UIViewController {
         loadingIndicator.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
-    }
-    
-    // MARK: - Binding
-    private func bind() {
-        // input
-        Observable.zip(
-            collectionView.rx.itemSelected,
-            collectionView.rx.modelSelected(Search.self)
-        )
-        .bind(to: viewModel.searchItemCellDidTap)
-        .disposed(by: disposeBag)
-        
-        // output
-        viewModel.searchList
-            .bind(to: collectionView.rx.items(
-                cellIdentifier: SearchListCell.reuseIdentifier,
-                cellType: SearchListCell.self
-            )) { (row, item, cell) in
-                cell.configureCell(appInfo: item)
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.isEmpty
-            .asDriver(onErrorJustReturn: false)
-            .drive { isEmpty in
-                self.collectionView.reloadData()
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.isLoading
-            .bind(to: loadingIndicator.rx.isAnimating)
-            .disposed(by: disposeBag)
     }
 }
 
@@ -132,4 +102,38 @@ extension SearchListViewController {
 // MARK: - UISearchResultsUpdating
 extension SearchListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) { }
+}
+
+// MARK: - Binding
+extension SearchListViewController {
+    private func bind() {
+        // input
+        Observable.zip(
+            collectionView.rx.itemSelected,
+            collectionView.rx.modelSelected(Search.self)
+        )
+        .bind(to: viewModel.searchItemCellDidTap)
+        .disposed(by: disposeBag)
+        
+        // output
+        viewModel.searchList
+            .bind(to: collectionView.rx.items(
+                cellIdentifier: SearchListCell.reuseIdentifier,
+                cellType: SearchListCell.self
+            )) { (row, item, cell) in
+                cell.configureCell(appInfo: item)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.isEmpty
+            .asDriver(onErrorJustReturn: false)
+            .drive { isEmpty in
+                self.collectionView.reloadData()
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.isLoading
+            .bind(to: loadingIndicator.rx.isAnimating)
+            .disposed(by: disposeBag)
+    }
 }

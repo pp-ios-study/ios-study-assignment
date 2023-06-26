@@ -72,6 +72,7 @@ extension SearchHistoryCell {
     }
 }
 
+// MARK: - Binding
 extension SearchHistoryCell {
     func bind() {
         guard let viewModel = self.viewModel else { return }

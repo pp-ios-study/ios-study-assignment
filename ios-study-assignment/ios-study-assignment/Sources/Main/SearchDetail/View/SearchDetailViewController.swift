@@ -45,8 +45,10 @@ final class SearchDetailViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.prefersLargeTitles = true
     }
-    
-    // MARK: - Set UI
+}
+
+// MARK: - Set UI
+extension SearchDetailViewController {
     private func setUI() {
         self.view.backgroundColor = .white
         

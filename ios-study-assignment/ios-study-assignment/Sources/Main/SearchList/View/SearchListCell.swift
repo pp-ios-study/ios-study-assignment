@@ -159,13 +159,11 @@ extension SearchListCell {
     }
     
     public func configureCell(appInfo: Search) {
-        DispatchQueue.main.async {
-            self.appTitleLabel.text = appInfo.trackName
-            self.appDescriptionLabel.text = appInfo.artistName
-            
-            self.starRateView.setScore(score: Int(appInfo.averageUserRating ?? 0))
-            self.appRatingLabel.text = (appInfo.userRatingCount ?? 0).suffixNumber()
-        }
+        appTitleLabel.text = appInfo.trackName
+        appDescriptionLabel.text = appInfo.artistName
+        
+        starRateView.setScore(score: Int(appInfo.averageUserRating ?? 0))
+        appRatingLabel.text = (appInfo.userRatingCount ?? 0).suffixNumber()
         
         let logoURL = URL(string: appInfo.artworkUrl512 ?? "")
         let processor = DownsamplingImageProcessor(size: appLogoImage.frame.size)
