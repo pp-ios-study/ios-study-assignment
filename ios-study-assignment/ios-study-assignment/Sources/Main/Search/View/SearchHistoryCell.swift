@@ -8,12 +8,13 @@
 import UIKit
 
 import RxSwift
+import RxCocoa
 
 final class SearchHistoryCell: UITableViewCell {
     
     // MARK: - UI
-    private lazy var searchHistoryTextLabel: UILabel = {
-        let label = UILabel()
+    private lazy var searchHistoryTextLabel: UITextField = {
+        let label = UITextField()
         label.textAlignment = .left
         label.textColor = .systemBlue
         label.font = UIFont(name: "AppleSDGothicNeo-Light", size: 20)
@@ -24,6 +25,10 @@ final class SearchHistoryCell: UITableViewCell {
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         return button
     }()
+    
+    // MARK: - Properties
+    private var viewModel: SearchViewModelProtocol?
+    private let disposeBag: DisposeBag = DisposeBag()
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -58,7 +63,21 @@ extension SearchHistoryCell {
         }
     }
     
-    func configureCell(text: String) {
+    func configureCell(text: String, viewModel: SearchViewModelProtocol) {
         searchHistoryTextLabel.text = text
+        
+        self.viewModel = viewModel
+        
+        bind()
+    }
+}
+
+extension SearchHistoryCell {
+    func bind() {
+        guard let viewModel = self.viewModel else { return }
+        
+        Observable.zip(deleteButton.rx.tap, searchHistoryTextLabel.rx.text.orEmpty)
+            .bind(to: viewModel.historyCellDeleteButtonDidTap)
+            .disposed(by: disposeBag)
     }
 }

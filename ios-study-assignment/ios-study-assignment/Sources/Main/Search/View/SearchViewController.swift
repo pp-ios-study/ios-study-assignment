@@ -100,7 +100,7 @@ extension SearchViewController {
 extension SearchViewController {
     private func setTableViewItem() {
         typealias DataSource = RxTableViewSectionedReloadDataSource<SectionModel>
-        let dataSource = DataSource { dataSource, tableView, indexPath, item in
+        let dataSource = DataSource { [viewModel] dataSource, tableView, indexPath, item in
             switch item {
             case .history(let text):
                 guard let cell = tableView.dequeueCell(
@@ -109,7 +109,7 @@ extension SearchViewController {
                 ) else {
                     return UITableViewCell()
                 }
-                cell.configureCell(text: text)
+                cell.configureCell(text: text, viewModel: viewModel)
                 return cell
             case .typing(let text):
                 guard let cell = tableView.dequeueCell(

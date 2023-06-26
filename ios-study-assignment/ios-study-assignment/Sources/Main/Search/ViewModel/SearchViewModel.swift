@@ -62,6 +62,7 @@ protocol SearchViewModelInput {
     var searchButtonClicked: PublishSubject<ControlEvent<Void>.Element> { get }
     var cancelButtonClicked: PublishSubject<ControlEvent<Void>.Element> { get }
     var historyCellDidTap: PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<SectionModel.SearchItem>.Element)> { get }
+    var historyCellDeleteButtonDidTap: PublishSubject<(ControlEvent<Void>.Element, ControlProperty<String>.Element)> { get }
     var searchItemCellDidTap: PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<Search>.Element)> { get }
     
     var viewWillAppear: PublishSubject<Bool> { get }
@@ -94,6 +95,7 @@ final class SearchViewModel: SearchViewModelProtocol {
     let searchButtonClicked = PublishSubject<ControlEvent<Void>.Element>()
     let cancelButtonClicked = PublishSubject<ControlEvent<Void>.Element>()
     let historyCellDidTap = PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<SectionModel.SearchItem>.Element)>()
+    let historyCellDeleteButtonDidTap = PublishSubject<(ControlEvent<Void>.Element, ControlProperty<String>.Element)>()
     let searchItemCellDidTap = PublishSubject<(ControlEvent<IndexPath>.Element, ControlEvent<Search>.Element)>()
     
     let viewWillAppear = PublishSubject<Bool>()
@@ -211,6 +213,12 @@ extension SearchViewModel {
                 }
                 
                 self.isShowResult.accept(true)
+            })
+            .disposed(by: disposeBag)
+        
+        historyCellDeleteButtonDidTap
+            .subscribe(onNext: { _, text in
+                self.deleteKeyword(keyword: text)
             })
             .disposed(by: disposeBag)
         
