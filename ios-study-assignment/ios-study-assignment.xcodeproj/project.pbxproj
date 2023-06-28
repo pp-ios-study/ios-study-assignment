@@ -316,9 +316,9 @@
 		02DD10B32A21024500DCFC0D /* Launch */ = {
 			isa = PBXGroup;
 			children = (
-				02DD10B42A21025400DCFC0D /* LaunchViewController.swift */,
+				940B3AA82A4CF958008D5A45 /* View */,
+				940B3AA92A4CF95F008D5A45 /* ViewModel */,
 				02DD10B62A21026A00DCFC0D /* LaunchCoordinator.swift */,
-				0278C2BF2A2F0B61009CA7CC /* LaunchViewModel.swift */,
 			);
 			path = Launch;
 			sourceTree = "<group>";
@@ -332,6 +332,22 @@
 				02DD10BF2A21035500DCFC0D /* Container+ViewModels.swift */,
 			);
 			path = DIContainer;
+			sourceTree = "<group>";
+		};
+		940B3AA82A4CF958008D5A45 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				02DD10B42A21025400DCFC0D /* LaunchViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		940B3AA92A4CF95F008D5A45 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0278C2BF2A2F0B61009CA7CC /* LaunchViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
