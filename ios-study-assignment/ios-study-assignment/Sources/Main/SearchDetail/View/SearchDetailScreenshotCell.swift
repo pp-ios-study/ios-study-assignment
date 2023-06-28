@@ -25,6 +25,11 @@ final class SearchDetailScreenshotCell: UITableViewCell {
         layout.itemSize = CGSize(width: 392 / 3 * 2, height: 696 / 3 * 2)
         
         let collectionView = UICollectionView(frame: self.contentView.frame, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.registerCell(ScreenshotCollectionViewCell.self)
+        
         return collectionView
     }()
     private lazy var deviceLabel: UILabel = {
@@ -52,7 +57,6 @@ final class SearchDetailScreenshotCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setUI()
-        setCollectionView()
     }
     
     required init?(coder: NSCoder) {
@@ -88,17 +92,6 @@ final class SearchDetailScreenshotCell: UITableViewCell {
         self.screenshotUrlList = screenshotUrlList
         collectionView.reloadData()
     }
-    
-    // MARK: - Set Collection View
-    private func setCollectionView() {
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(
-            ScreenshotCollectionViewCell.self,
-            forCellWithReuseIdentifier: ScreenshotCollectionViewCell.identifier
-        )
-    }
 }
 
 // MARK: - UICollectionView
@@ -108,10 +101,10 @@ extension SearchDetailScreenshotCell: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: ScreenshotCollectionViewCell.identifier,
+        guard let cell = collectionView.dequeueCell(
+            ScreenshotCollectionViewCell.self,
             for: indexPath
-        ) as? ScreenshotCollectionViewCell else {
+        ) else {
             return UICollectionViewCell()
         }
         cell.configureCell(url: screenshotUrlList[indexPath.row])
@@ -130,16 +123,13 @@ extension SearchDetailScreenshotCell: UICollectionViewDelegateFlowLayout {
 }
 
 // MARK: - UICollectionViewCell
-fileprivate class ScreenshotCollectionViewCell: UICollectionViewCell {
+fileprivate final class ScreenshotCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI
     private lazy var screenshot: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
-    
-    // MARK: - Properties
-    fileprivate static let identifier = "ScreenshotCollectionViewCell"
     
     // MARK: - Life Cycle
     override init(frame: CGRect) {
@@ -156,8 +146,10 @@ fileprivate class ScreenshotCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         setLayer()
     }
-    
-    // MARK: - Set UI
+}
+
+// MARK: - Set UI
+extension ScreenshotCollectionViewCell {
     private func setUI() {
         self.contentView.addSubview(screenshot)
         screenshot.snp.makeConstraints {

@@ -7,10 +7,14 @@
 
 import UIKit
 
-class LaunchViewController: UIViewController {
+import RxSwift
+import RxCocoa
+
+final class LaunchViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: LaunchViewModelProtocol
+    private let disposeBag: DisposeBag = DisposeBag()
     
     // MARK: - Init
     init(viewModel: LaunchViewModelProtocol) {
@@ -29,17 +33,20 @@ class LaunchViewController: UIViewController {
         
         setUI()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        viewModel.fetch()
-    }
 }
 
 // MARK: - Set UI
 extension LaunchViewController {
     private func setUI() {
         self.view.backgroundColor = .white
+    }
+}
+
+// MARK: - Binding
+extension LaunchViewController {
+    private func bind() {
+        self.rx.viewWillAppear
+            .bind(to: viewModel.viewWillAppear)
+            .disposed(by: disposeBag)
     }
 }

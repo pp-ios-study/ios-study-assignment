@@ -14,7 +14,7 @@ import RxCocoa
 import Swinject
 import SwinjectAutoregistration
 
-class SearchCoordinator: BaseCoordinator {
+final class SearchCoordinator: BaseCoordinator {
 
     private let viewModel: SearchViewModelProtocol
     private let disposeBag = DisposeBag()

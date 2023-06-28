@@ -9,7 +9,7 @@ import UIKit
 
 import RxSwift
 
-class SearchMatchItemCell: UITableViewCell {
+final class SearchMatchItemCell: UITableViewCell {
     
     // MARK: - UI
     private lazy var cellImageView: UIImageView = {

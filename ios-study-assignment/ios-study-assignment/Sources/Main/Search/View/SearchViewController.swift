@@ -12,7 +12,7 @@ import RxDataSources
 import RxSwift
 import SnapKit
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController {
     
     // MARK: - UI
     private lazy var tableView: UITableView = {

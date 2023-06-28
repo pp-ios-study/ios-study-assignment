@@ -42,7 +42,8 @@ extension AppCoordinator {
         ViewControllerUtils.setRootViewController(
             window: window,
             viewController: coordinator.navigationController,
-            withAnimation: true)
+            withAnimation: true
+        )
     }
     
     private func showMain() {
@@ -54,6 +55,7 @@ extension AppCoordinator {
         ViewControllerUtils.setRootViewController(
             window: window,
             viewController: coordinator.navigationController,
-            withAnimation: true)
+            withAnimation: true
+        )
     }
 }

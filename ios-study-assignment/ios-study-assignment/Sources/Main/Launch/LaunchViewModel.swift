@@ -9,30 +9,35 @@ import RxSwift
 import RxCocoa
 
 protocol LaunchViewModelInput {
-    var sessionService: SessionServiceProtocol { get }
     var disposeBag: DisposeBag { get }
+    var sessionService: SessionServiceProtocol { get }
+    var viewWillAppear: PublishRelay<Bool> { get }
 }
 
-protocol LaunchViewModelOutput {
-    func fetch()
-}
+protocol LaunchViewModelOutput { }
 
-protocol LaunchViewModelProtocol: LaunchViewModelInput { }
-
-extension LaunchViewModelProtocol {
-    func fetch() {
-        sessionService.moveToMainSession()
-    }
-}
+protocol LaunchViewModelProtocol: LaunchViewModelInput & LaunchViewModelOutput { }
 
 final class LaunchViewModel: LaunchViewModelProtocol {
     
     // MARK: - Input
-    let sessionService: SessionServiceProtocol
     let disposeBag: DisposeBag = DisposeBag()
+    let sessionService: SessionServiceProtocol
+    let viewWillAppear = PublishRelay<Bool>()
     
     // MARK: - Init
     init(sessionService: SessionServiceProtocol) {
         self.sessionService = sessionService
+    }
+}
+
+// MARK: - Binding
+extension LaunchViewModel {
+    func bind() {
+        viewWillAppear
+            .subscribe(onNext: { _ in
+                self.sessionService.moveToMainSession()
+            })
+            .disposed(by: disposeBag)
     }
 }

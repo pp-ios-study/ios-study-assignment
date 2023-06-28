@@ -11,7 +11,7 @@ import Common
 import RxSwift
 import RxCocoa
 
-class LaunchCoordinator: BaseCoordinator {
+final class LaunchCoordinator: BaseCoordinator {
 
     private let viewModel: LaunchViewModelProtocol
     private let disposeBag = DisposeBag()
