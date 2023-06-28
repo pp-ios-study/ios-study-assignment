@@ -182,20 +182,18 @@ extension SearchDetailSummaryCell {
     }
     
     public func configureCell(appInfo: Search) {
-        DispatchQueue.main.async {
-            self.reviewCountLabel.text = (appInfo.userRatingCount ?? 0).suffixNumber()  + "개의 평가"
-            self.ratingLabel.text = "\(round(appInfo.averageUserRating! * 10) / 10)"
-            self.starRateView.setScore(score: Int(appInfo.averageUserRating ?? 0))
-            
-            self.ageLabel.text = appInfo.contentAdvisoryRating != nil ? "\(appInfo.contentAdvisoryRating!)" : ""
-            
-            if let regionCode = NSLocale.current.language.region?.identifier, let languageCodeList = appInfo.languageCodesISO2A {
-                self.languageLabel.text = languageCodeList.contains(regionCode) ? regionCode : languageCodeList.first
-            } else {
-                self.languageLabel.text = ""
-            }
-            
-            self.languageSubLabel2.text = "+ \(appInfo.languageCodesISO2A?.count ?? 0)개 언어"
+        reviewCountLabel.text = (appInfo.userRatingCount ?? 0).suffixNumber()  + "개의 평가"
+        ratingLabel.text = "\(round(appInfo.averageUserRating! * 10) / 10)"
+        starRateView.setScore(score: Int(appInfo.averageUserRating ?? 0))
+        
+        ageLabel.text = appInfo.contentAdvisoryRating != nil ? "\(appInfo.contentAdvisoryRating!)" : ""
+        
+        if let regionCode = NSLocale.current.language.region?.identifier, let languageCodeList = appInfo.languageCodesISO2A {
+            languageLabel.text = languageCodeList.contains(regionCode) ? regionCode : languageCodeList.first
+        } else {
+            languageLabel.text = ""
         }
+        
+        languageSubLabel2.text = "+ \(appInfo.languageCodesISO2A?.count ?? 0)개 언어"
     }
 }
