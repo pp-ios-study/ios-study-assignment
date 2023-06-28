@@ -7,12 +7,13 @@
 
 import UIKit
 
+import Common
 import Domain
 import RxCocoa
 import RxDataSources
 import RxSwift
 
-final class SearchDetailViewController: UIViewController {
+final class SearchDetailViewController: BaseViewController {
     
     // MARK: - UI
     private lazy var tableView: UITableView = {
@@ -29,7 +30,6 @@ final class SearchDetailViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: SearchDetailViewModelProtocol
-    private let disposeBag: DisposeBag = DisposeBag()
     
     // MARK: - Init
     init(viewModel: SearchDetailViewModelProtocol) {
@@ -56,8 +56,6 @@ final class SearchDetailViewController: UIViewController {
 // MARK: - Set UI
 extension SearchDetailViewController {
     private func setUI() {
-        self.view.backgroundColor = .white
-        
         self.view.addSubview(tableView)
         tableView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()

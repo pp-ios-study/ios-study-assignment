@@ -28,6 +28,8 @@ final class LaunchViewModel: LaunchViewModelProtocol {
     // MARK: - Init
     init(sessionService: SessionServiceProtocol) {
         self.sessionService = sessionService
+        
+        bind()
     }
 }
 

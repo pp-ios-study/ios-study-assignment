@@ -7,12 +7,13 @@
 
 import UIKit
 
+import Common
 import RxCocoa
 import RxDataSources
 import RxSwift
 import SnapKit
 
-final class SearchViewController: UIViewController {
+final class SearchViewController: BaseViewController {
     
     // MARK: - UI
     private lazy var tableView: UITableView = {
@@ -26,7 +27,6 @@ final class SearchViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: SearchViewModelProtocol
-    private let disposeBag: DisposeBag = DisposeBag()
     
     // MARK: - Init
     init(viewModel: SearchViewModelProtocol) {
@@ -73,8 +73,6 @@ extension SearchViewController {
     }
     
     private func setUI() {
-        self.view.backgroundColor = .white
-        
         self.view.addSubview(tableView)
         tableView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()

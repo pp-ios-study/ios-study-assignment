@@ -7,14 +7,14 @@
 
 import UIKit
 
+import Common
 import RxSwift
 import RxCocoa
 
-final class LaunchViewController: UIViewController {
+final class LaunchViewController: BaseViewController {
     
     // MARK: - Properties
     private let viewModel: LaunchViewModelProtocol
-    private let disposeBag: DisposeBag = DisposeBag()
     
     // MARK: - Init
     init(viewModel: LaunchViewModelProtocol) {
@@ -31,14 +31,7 @@ final class LaunchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setUI()
-    }
-}
-
-// MARK: - Set UI
-extension LaunchViewController {
-    private func setUI() {
-        self.view.backgroundColor = .white
+        bind()
     }
 }
 

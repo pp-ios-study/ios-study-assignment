@@ -12,7 +12,7 @@ import Domain
 import RxSwift
 import RxCocoa
 
-final class SearchListViewController: UIViewController {
+final class SearchListViewController: BaseViewController {
     
     // MARK: - UI
     private lazy var collectionView: UICollectionView = {
@@ -25,7 +25,6 @@ final class SearchListViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: SearchViewModelProtocol
-    private let disposeBag: DisposeBag = DisposeBag()
     
     // MARK: - Init
     init(viewModel: SearchViewModelProtocol) {
@@ -51,8 +50,6 @@ final class SearchListViewController: UIViewController {
 // MARK: - Set UI
 extension SearchListViewController {
     private func setUI() {
-        self.view.backgroundColor = .white
-        
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints {
             $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
