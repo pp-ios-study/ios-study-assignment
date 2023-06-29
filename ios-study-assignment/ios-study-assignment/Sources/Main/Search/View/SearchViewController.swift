@@ -43,6 +43,7 @@ final class SearchViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setSearchBar()
         setNavigation()
         setUI()
         setTableViewItem()
@@ -54,7 +55,7 @@ final class SearchViewController: BaseViewController {
 
 // MARK: Set UI
 extension SearchViewController {
-    private func setNavigation() {
+    private func setSearchBar() {
         searchListViewController = SearchListViewController(viewModel: viewModel)
         
         searchController = UISearchController(searchResultsController: searchListViewController)
@@ -62,11 +63,13 @@ extension SearchViewController {
         searchController.searchResultsUpdater = searchListViewController
         searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         searchController.showsSearchResultsController = false
-        
-        self.navigationItem.title = "검색"
-        self.navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
+    private func setNavigation() {
         self.navigationItem.searchController = searchController
         self.navigationItem.searchController?.hidesNavigationBarDuringPresentation = true
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.navigationItem.title = "검색"
         
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.sizeToFit()

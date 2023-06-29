@@ -38,8 +38,8 @@ final class LaunchViewController: BaseViewController {
 // MARK: - Binding
 extension LaunchViewController {
     private func bind() {
-        self.rx.viewWillAppear
-            .bind(to: viewModel.viewWillAppear)
+        self.rx.viewDidAppear
+            .bind(to: viewModel.viewDidAppear)
             .disposed(by: disposeBag)
     }
 }

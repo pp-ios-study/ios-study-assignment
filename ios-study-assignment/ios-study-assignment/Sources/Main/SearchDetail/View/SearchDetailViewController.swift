@@ -131,7 +131,6 @@ extension SearchDetailViewController {
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
-
 }
 
 // MARK: - Binding

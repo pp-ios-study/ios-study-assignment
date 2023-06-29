@@ -13,13 +13,6 @@ import Kingfisher
 
 final class SearchListCell: UICollectionViewCell {
     
-    // MARK: - Enum
-    enum NumberState {
-        case underThousand
-        case thousand
-        case upperThousand
-    }
-    
     // MARK: - UI
     private lazy var appLogoImage: UIImageView = {
         let imageView = UIImageView()
@@ -69,9 +62,6 @@ final class SearchListCell: UICollectionViewCell {
     private lazy var starRateView: StarRateView = StarRateView()
     
     private var appScreenShotImageList: [UIImageView] = []
-    
-    // MARK: - Properties
-    private var numberState: NumberState = .underThousand
     
     // MARK: - Init
     override init(frame: CGRect) {

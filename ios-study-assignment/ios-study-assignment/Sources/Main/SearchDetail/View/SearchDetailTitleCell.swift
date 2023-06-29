@@ -32,9 +32,6 @@ final class SearchDetailTitleCell: UITableViewCell {
         return label
     }()
     
-    // MARK: - Properties
-    private var appInfo: Search?
-    
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -86,12 +83,8 @@ extension SearchDetailTitleCell {
     }
     
     public func configureCell(appInfo: Search) {
-        self.appInfo = appInfo
-        
-        DispatchQueue.main.async {
-            self.appTitleLabel.text = appInfo.trackName
-            self.appDescriptionLabel.text = appInfo.artistName
-        }
+        appTitleLabel.text = appInfo.trackName
+        appDescriptionLabel.text = appInfo.artistName
         
         let logoURL = URL(string: appInfo.artworkUrl512 ?? "")
         appLogoImage.kf.setImage(with: logoURL)

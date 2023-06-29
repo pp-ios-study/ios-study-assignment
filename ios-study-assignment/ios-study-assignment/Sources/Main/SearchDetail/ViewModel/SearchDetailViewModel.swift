@@ -87,7 +87,7 @@ final class SearchDetailViewModel: SearchDetailViewModelProtocol {
     let isLargeTitle = PublishRelay<Bool>()
     
     // MARK: - Private
-    let appInfo: Search
+    private let appInfo: Search
     
     init(appInfo: Search) {
         self.appInfo = appInfo

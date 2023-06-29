@@ -128,6 +128,10 @@ fileprivate final class ScreenshotCollectionViewCell: UICollectionViewCell {
     // MARK: - UI
     private lazy var screenshot: UIImageView = {
         let imageView = UIImageView()
+        imageView.layer.cornerRadius = 12
+        imageView.layer.borderColor = UIColor.lightGray.cgColor
+        imageView.layer.borderWidth = 0.5
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -141,11 +145,6 @@ fileprivate final class ScreenshotCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        setLayer()
-    }
 }
 
 // MARK: - Set UI
@@ -157,13 +156,6 @@ extension ScreenshotCollectionViewCell {
             $0.height.equalTo(696 / 3 * 2)
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
-    }
-    
-    private func setLayer() {
-        screenshot.layer.cornerRadius = 12
-        screenshot.layer.borderColor = UIColor.lightGray.cgColor
-        screenshot.layer.borderWidth = 0.5
-        screenshot.clipsToBounds = true
     }
     
     fileprivate func configureCell(url: String) {

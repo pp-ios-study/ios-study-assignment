@@ -12,13 +12,6 @@ import Domain
 
 final class SearchDetailSummaryCell: UITableViewCell {
     
-    // MARK: - Enum
-    enum NumberState {
-        case underThousand
-        case thousand
-        case upperThousand
-    }
-    
     // MARK: - UI
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -122,9 +115,6 @@ final class SearchDetailSummaryCell: UITableViewCell {
         label.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
         return label
     }()
-    
-    // MARK: - Properties
-    private var numberState: NumberState = .underThousand
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
