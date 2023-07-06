@@ -174,5 +174,9 @@ extension SearchViewController {
         viewModel.isShowResult
             .bind(to: searchController.rx.isActive)
             .disposed(by: disposeBag)
+        
+        viewModel.isLargeTitle
+            .bind(to: self.navigationController!.navigationBar.rx.prefersLargeTitles)
+            .disposed(by: disposeBag)
     }
 }

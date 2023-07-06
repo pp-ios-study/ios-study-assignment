@@ -75,6 +75,7 @@ protocol SearchViewModelOutput {
     var isLoading: PublishRelay<Bool> { get }
     var isEmpty: PublishRelay<Bool> { get }
     var isShowResult: PublishRelay<Bool> { get }
+    var isLargeTitle: PublishRelay<Bool> { get }
     
     func fetchDataBase()
     func saveKeyword(keyword: String)
@@ -107,6 +108,7 @@ final class SearchViewModel: SearchViewModelProtocol {
     let isLoading = PublishRelay<Bool>()
     let isEmpty = PublishRelay<Bool>()
     let isShowResult = PublishRelay<Bool>()
+    let isLargeTitle = PublishRelay<Bool>()
     
     init(realm: RealmDAO<SearchHistory>, service: APIProtocol) {
         self.realm = realm
@@ -198,6 +200,8 @@ extension SearchViewModel {
             .subscribe(onNext: {
                 self.title.accept("")
                 self.isShowResult.accept(false)
+                self.isLargeTitle.accept(true)
+                self.fetchDataBase()
             })
             .disposed(by: disposeBag)
         

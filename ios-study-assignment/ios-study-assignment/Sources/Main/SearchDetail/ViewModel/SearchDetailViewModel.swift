@@ -113,14 +113,16 @@ extension SearchDetailViewModel {
 extension SearchDetailViewModel {
     func bind() {
         viewWillAppear
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
+                guard let self else { return }
                 self.isLargeTitle.accept(true)
                 self.fetchData()
             })
             .disposed(by: disposeBag)
         
         viewWillDisappear
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
+                guard let self else { return }
                 self.isLargeTitle.accept(false)
             })
             .disposed(by: disposeBag)

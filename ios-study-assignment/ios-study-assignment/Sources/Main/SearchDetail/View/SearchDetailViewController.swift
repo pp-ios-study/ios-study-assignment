@@ -67,7 +67,9 @@ extension SearchDetailViewController {
 extension SearchDetailViewController {
     private func setTableViewItem() {
         typealias DataSource = RxTableViewSectionedReloadDataSource<DetailSectionModel>
-        let dataSource = DataSource { dataSource, tableView, indexPath, item in
+        let dataSource = DataSource { [weak self] dataSource, tableView, indexPath, item in
+            guard let self else { return UITableViewCell() }
+            
             switch item {
             case .title(let appInfo):
                 guard let cell = tableView.dequeueCell(
