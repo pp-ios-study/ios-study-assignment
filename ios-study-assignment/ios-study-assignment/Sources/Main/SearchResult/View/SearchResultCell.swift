@@ -1,5 +1,5 @@
 //
-//  SearchListCell.swift
+//  SearchResultCell.swift
 //  ios-study-assignment
 //
 //  Created by 최승명 on 2023/06/11.
@@ -11,7 +11,7 @@ import Common
 import Domain
 import Kingfisher
 
-final class SearchListCell: UICollectionViewCell {
+final class SearchResultCell: UICollectionViewCell {
     
     // MARK: - UI
     private lazy var appLogoImage: UIImageView = {
@@ -68,20 +68,16 @@ final class SearchListCell: UICollectionViewCell {
         super.init(frame: frame)
         
         setUI()
+        setLayer()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        setLayer()
-    }
 }
 
 // MARK: - Set UI
-extension SearchListCell {
+extension SearchResultCell {
     private func setUI() {
         self.contentView.addSubview(appLogoImage)
         appLogoImage.snp.makeConstraints {

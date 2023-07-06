@@ -1,5 +1,5 @@
 //
-//  SearchListViewController.swift
+//  SearchResultViewController.swift
 //  ios-study-assignment
 //
 //  Created by 최승명 on 2023/06/04.
@@ -12,13 +12,13 @@ import Domain
 import RxSwift
 import RxCocoa
 
-final class SearchListViewController: BaseViewController {
+final class SearchResultViewController: BaseViewController {
     
     // MARK: - UI
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.generateLayout())
         collectionView.isScrollEnabled = true
-        collectionView.registerCell(SearchListCell.self)
+        collectionView.registerCell(SearchResultCell.self)
         return collectionView
     }()
     private lazy var loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -48,7 +48,7 @@ final class SearchListViewController: BaseViewController {
 }
 
 // MARK: - Set UI
-extension SearchListViewController {
+extension SearchResultViewController {
     private func setUI() {
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints {
@@ -64,7 +64,7 @@ extension SearchListViewController {
 }
 
 // MARK: - Set Collection View
-extension SearchListViewController {
+extension SearchResultViewController {
     private func generateLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
             return self.generateSearchItemLayout()
@@ -97,12 +97,12 @@ extension SearchListViewController {
 }
 
 // MARK: - UISearchResultsUpdating
-extension SearchListViewController: UISearchResultsUpdating {
+extension SearchResultViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) { }
 }
 
 // MARK: - Binding
-extension SearchListViewController {
+extension SearchResultViewController {
     private func bind() {
         // input
         Observable.zip(
@@ -115,8 +115,8 @@ extension SearchListViewController {
         // output
         viewModel.searchList
             .bind(to: collectionView.rx.items(
-                cellIdentifier: SearchListCell.reuseIdentifier,
-                cellType: SearchListCell.self
+                cellIdentifier: SearchResultCell.reuseIdentifier,
+                cellType: SearchResultCell.self
             )) { (row, item, cell) in
                 cell.configureCell(appInfo: item)
             }
