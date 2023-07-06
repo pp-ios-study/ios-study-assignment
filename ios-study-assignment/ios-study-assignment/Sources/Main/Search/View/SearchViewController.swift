@@ -23,7 +23,7 @@ final class SearchViewController: BaseViewController {
         return tableView
     }()
     private var searchController: UISearchController!
-    private var searchListViewController: SearchListViewController!
+    private var searchListViewController: SearchResultViewController!
     
     // MARK: - Properties
     private let viewModel: SearchViewModelProtocol
@@ -56,7 +56,7 @@ final class SearchViewController: BaseViewController {
 // MARK: Set UI
 extension SearchViewController {
     private func setSearchBar() {
-        searchListViewController = SearchListViewController(viewModel: viewModel)
+        searchListViewController = SearchResultViewController(viewModel: viewModel)
         
         searchController = UISearchController(searchResultsController: searchListViewController)
         searchController.searchBar.placeholder = "게임, 앱, 스토리 등"

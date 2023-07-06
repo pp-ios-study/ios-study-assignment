@@ -37,7 +37,8 @@ final class LaunchViewModel: LaunchViewModelProtocol {
 extension LaunchViewModel {
     func bind() {
         viewDidAppear
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
+                guard let self else { return }
                 self.sessionService.moveToMainSession()
             })
             .disposed(by: disposeBag)
